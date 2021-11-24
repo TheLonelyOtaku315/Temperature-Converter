@@ -1,0 +1,30 @@
+.primary-color{
+
+    -fx-background-color:#FFFFFF;
+
+}
+.secondary-color{
+
+    -fx-background-color:#E7E7E7;
+}
+.exemple{
+    -fx-border-color: gray;
+    -fx-background-color:#FFFFFF;
+}
+
+.round-border{
+
+    -fx-background-radius:100;
+
+}
+
+/*Automatic color set*/
+.label{
+
+    -fx-text-fill: black;
+
+}
+
+/*.chart-bar {
+    -fx-bar-fill: darkBlue; 
+}*/

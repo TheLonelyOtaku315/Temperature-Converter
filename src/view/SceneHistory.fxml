@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="history" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="primary-color" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerHistory">
+   <top>
+      <VBox prefHeight="98.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <children>
+            <Label text="Temperature Converter (History)">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <MenuBar styleClass="secondary-color">
+              <menus>
+                <Menu mnemonicParsing="false" text="Converter">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#switchToConverter" text="Converter" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Setting">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#switchToSetting" text="Setting" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="History">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="History" />
+                     </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView prefHeight="470.0" prefWidth="695.0" styleClass="secondary-color">
+              <columns>
+                <TableColumn prefWidth="129.0" text="Date" />
+                  <TableColumn minWidth="0.0" prefWidth="171.0" text="Information you enter:" />
+                  <TableColumn minWidth="0.0" prefWidth="219.0" text="Information Given to you: " />
+                  <TableColumn minWidth="0.0" prefWidth="175.0" text="Delete" />
+              </columns>
+               <HBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </HBox.margin>
+            </TableView>
+            <VBox alignment="CENTER_LEFT" prefHeight="470.0" prefWidth="160.0">
+               <HBox.margin>
+                  <Insets left="15.0" right="15.0" top="15.0" />
+               </HBox.margin>
+               <children>
+                  <Label text="Search : ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ComboBox prefWidth="150.0" styleClass="secondary-color">
+                     <VBox.margin>
+                        <Insets bottom="60.0" left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" styleClass="secondary-color" text="Clear All">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="60.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </children></HBox>
+   </center>
+</BorderPane>
