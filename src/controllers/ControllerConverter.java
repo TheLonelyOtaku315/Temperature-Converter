@@ -82,30 +82,78 @@ public class ControllerConverter implements Initializable {
                 switch (newBox) {
                     case "Boiling Point of Water":
                         data.clear();
+                        C.setText("200");
 
-                        C.setText("100");
-                        K.setText("373.2");
-                        F.setText("212");
+                        if (decimalRestriction != null) {
+
+                            DecimalFormat df = new DecimalFormat(decimalRestriction);
+
+                            String CTemperature = df.format(C.getText());
+                            String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
+                            String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
+
+                            C.setText(CTemperature);
+                            K.setText(FTemperature);
+                            F.setText(KTemperature);
+
+                        } else {
+                            K.setText("373.15");
+                            F.setText("212");
+
+                        }
+
                         addData(C, F, K);
                         comboBox.setValue("...");
 
                         break;
                     case "Melting Point of Ice":
                         data.clear();
-
                         C.setText("0");
-                        K.setText("273.15");
-                        F.setText("32");
+
+                        if (decimalRestriction != null) {
+
+                            DecimalFormat df = new DecimalFormat(decimalRestriction);
+
+                            String CTemperature = df.format(C.getText());
+                            String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
+                            String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
+
+                            C.setText(CTemperature);
+                            K.setText(FTemperature);
+                            F.setText(KTemperature);
+
+                        } else {
+                            K.setText("273.15");
+                            F.setText("32");
+
+                        }
+
                         addData(C, F, K);
                         comboBox.setValue("...");
 
                         break;
                     case "Absolute Zero":
                         data.clear();
-
                         C.setText("-273.15");
-                        K.setText("0");
-                        F.setText("-459.7");
+
+                        if (decimalRestriction != null) {
+
+                            DecimalFormat df = new DecimalFormat(decimalRestriction);
+
+                            String CTemperature = df.format(C.getText());
+                            String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
+                            String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
+
+                            C.setText(CTemperature);
+                            K.setText(FTemperature);
+                            F.setText(KTemperature);
+
+                        } else {
+                            K.setText("0");
+                            F.setText("-459,67");
+
+                        }
+
                         addData(C, F, K);
                         comboBox.setValue("...");
 
@@ -113,11 +161,27 @@ public class ControllerConverter implements Initializable {
                     case "Room Temperature":
                         data.clear();
                         C.setText("22");
-                        K.setText("295.15");
-                        F.setText("68");
+
+                        if (decimalRestriction != null) {
+
+                            DecimalFormat df = new DecimalFormat(decimalRestriction);
+
+                            String CTemperature = df.format(C.getText());
+                            String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
+                            String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
+
+                            C.setText(CTemperature);
+                            K.setText(FTemperature);
+                            F.setText(KTemperature);
+
+                        } else {
+                            K.setText("295.15");
+                            F.setText("71.6");
+
+                        }
+
                         addData(C, F, K);
                         comboBox.setValue("...");
-
                         break;
                 }
             }
