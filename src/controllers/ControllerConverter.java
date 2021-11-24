@@ -74,11 +74,6 @@ public class ControllerConverter implements Initializable {
         observableArrayList.add("Absolute Zero");
         observableArrayList.add("Room Temperature");
 
-        if ("".equals(C.getText()) && "".equals(F.getText()) && "".equals(K.getText())) {
-            comboBox.setValue("...");
-
-        }
-
         comboBox.getItems().removeAll(comboBox.getItems());
         comboBox.getItems().addAll(observableArrayList);
 
@@ -257,8 +252,11 @@ public class ControllerConverter implements Initializable {
 
     @FXML
     private void clear(ActionEvent event) {
-        clear(C, F, K);
+        data.clear();
 
+        C.setText("");
+        F.setText("");
+        K.setText("");
     }
 
     private static void addData(TextField C, TextField F, TextField K) {
