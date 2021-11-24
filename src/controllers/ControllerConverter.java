@@ -132,15 +132,15 @@ public class ControllerConverter implements Initializable {
                 K.setText(KTemperature);
 
                 XYChart.Series<String, Number> TemperatureC = new XYChart.Series<>();
-//                TemperatureC.setName("°C");
+                TemperatureC.setName("°C");
                 TemperatureC.getData().addAll(new XYChart.Data<>("°C", Double.parseDouble(C.getText())));
 
                 XYChart.Series<String, Number> TemperatureF = new XYChart.Series<>();
-//                TemperatureF.setName("°F");
+                TemperatureF.setName("°F");
                 TemperatureF.getData().addAll(new XYChart.Data<>("°F", Double.parseDouble(F.getText())));
 
                 XYChart.Series<String, Number> TemperatureK = new XYChart.Series<>();
-//                TemperatureK.setName(" K");
+                TemperatureK.setName(" K");
                 TemperatureK.getData().addAll(new XYChart.Data<>(" K", Double.parseDouble(K.getText())));
 
                 data.addAll(TemperatureC, TemperatureF, TemperatureK);
