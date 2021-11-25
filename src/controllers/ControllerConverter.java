@@ -68,6 +68,9 @@ public class ControllerConverter implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        decimalRestriction = ControllerSetting.decimalWant;
+
         ArrayList<String> observableArrayList = new ArrayList<>();
         observableArrayList.add("Boiling Point of Water");
         observableArrayList.add("Melting Point of Ice");
@@ -82,19 +85,19 @@ public class ControllerConverter implements Initializable {
                 switch (newBox) {
                     case "Boiling Point of Water":
                         data.clear();
-                        C.setText("200");
+                        C.setText("100");
 
                         if (decimalRestriction != null) {
 
                             DecimalFormat df = new DecimalFormat(decimalRestriction);
 
-                            String CTemperature = df.format(C.getText());
+                            String CTemperature = df.format(Double.parseDouble(C.getText()));
                             String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
                             String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
 
                             C.setText(CTemperature);
-                            K.setText(FTemperature);
-                            F.setText(KTemperature);
+                            F.setText(FTemperature);
+                            K.setText(KTemperature);
 
                         } else {
                             K.setText("373.15");
@@ -114,13 +117,13 @@ public class ControllerConverter implements Initializable {
 
                             DecimalFormat df = new DecimalFormat(decimalRestriction);
 
-                            String CTemperature = df.format(C.getText());
+                            String CTemperature = df.format(Double.parseDouble(C.getText()));
                             String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
                             String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
 
                             C.setText(CTemperature);
-                            K.setText(FTemperature);
-                            F.setText(KTemperature);
+                            F.setText(FTemperature);
+                            K.setText(KTemperature);
 
                         } else {
                             K.setText("273.15");
@@ -140,17 +143,17 @@ public class ControllerConverter implements Initializable {
 
                             DecimalFormat df = new DecimalFormat(decimalRestriction);
 
-                            String CTemperature = df.format(C.getText());
+                            String CTemperature = df.format(Double.parseDouble(C.getText()));
                             String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
                             String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
 
                             C.setText(CTemperature);
-                            K.setText(FTemperature);
-                            F.setText(KTemperature);
+                            F.setText(FTemperature);
+                            K.setText(KTemperature);
 
                         } else {
                             K.setText("0");
-                            F.setText("-459,67");
+                            F.setText("-459.67");
 
                         }
 
@@ -166,13 +169,13 @@ public class ControllerConverter implements Initializable {
 
                             DecimalFormat df = new DecimalFormat(decimalRestriction);
 
-                            String CTemperature = df.format(C.getText());
+                            String CTemperature = df.format(Double.parseDouble(C.getText()));
                             String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
                             String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
 
                             C.setText(CTemperature);
-                            K.setText(FTemperature);
-                            F.setText(KTemperature);
+                            F.setText(FTemperature);
+                            K.setText(KTemperature);
 
                         } else {
                             K.setText("295.15");
@@ -324,18 +327,20 @@ public class ControllerConverter implements Initializable {
     }
 
     private static void addData(TextField C, TextField F, TextField K) {
-        XYChart.Series<String, Number> TemperatureC3 = new XYChart.Series<>();
-        TemperatureC3.setName("°C");
-        TemperatureC3.getData().addAll(new XYChart.Data<>("", Double.parseDouble(C.getText())));
+        data.clear();
+        
+        XYChart.Series<String, Number> TemperatureC = new XYChart.Series<>();
+        TemperatureC.setName("°C");
+        TemperatureC.getData().add(new XYChart.Data<>("", Double.parseDouble(C.getText())));
 
-        XYChart.Series<String, Number> TemperatureF3 = new XYChart.Series<>();
-        TemperatureF3.setName("°F");
-        TemperatureF3.getData().addAll(new XYChart.Data<>("", Double.parseDouble(F.getText())));
+        XYChart.Series<String, Number> TemperatureF = new XYChart.Series<>();
+        TemperatureF.setName("°F");
+        TemperatureF.getData().add(new XYChart.Data<>("", Double.parseDouble(F.getText())));
 
-        XYChart.Series<String, Number> TemperatureK3 = new XYChart.Series<>();
-        TemperatureK3.setName(" K");
-        TemperatureK3.getData().addAll(new XYChart.Data<>("", Double.parseDouble(K.getText())));
+        XYChart.Series<String, Number> TemperatureK = new XYChart.Series<>();
+        TemperatureK.setName(" K");
+        TemperatureK.getData().add(new XYChart.Data<>("", Double.parseDouble(K.getText())));
 
-        data.addAll(TemperatureC3, TemperatureF3, TemperatureK3);
+        data.addAll(TemperatureC, TemperatureF, TemperatureK);
     }
 }
