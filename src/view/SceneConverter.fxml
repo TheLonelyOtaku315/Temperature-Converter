@@ -125,9 +125,9 @@
                    
                                 </children>
                       </GridPane>
-                  <Label text="Temperature smaller then 0 K do not exit" textFill="RED">
+                  <Label fx:id="errorMessage" style="-fx-text-fill: #ff0000;" text="Thre Temperature can't be smaller then 0 K" textFill="RED">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>

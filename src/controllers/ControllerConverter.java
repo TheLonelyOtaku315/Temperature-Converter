@@ -10,6 +10,8 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -24,9 +27,11 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import static jfxsample.converter.CelsiusToFahrenheit;
 import static jfxsample.converter.CelsiusToKelvin;
 import static jfxsample.converter.FahrenheitToCelsius;
@@ -65,11 +70,17 @@ public class ControllerConverter implements Initializable {
     private NumberAxis y;
     @FXML
     private CategoryAxis x;
+    @FXML
+    private Label errorMessage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         decimalRestriction = ControllerSetting.decimalWant;
+
+        FadeTransition fader = new FadeTransition(Duration.seconds(0.1), errorMessage);
+        fader.setToValue(0);
+        fader.play();
 
         ArrayList<String> observableArrayList = new ArrayList<>();
         observableArrayList.add("Boiling Point of Water");
@@ -227,7 +238,7 @@ public class ControllerConverter implements Initializable {
         stage.show();
     }
 
-    private static void switchBetweenConverter(TextField C, TextField F, TextField K) {
+    private static void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage) {
         if (!C.getText().equals("")) {
             data.clear();
 
@@ -243,6 +254,11 @@ public class ControllerConverter implements Initializable {
                 K.setText(KTemperature);
                 if (0 >= Double.valueOf(KTemperature)) {
                     clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(50);
+                    fadeTransition.play();
                 }
             } else {
 
@@ -253,6 +269,11 @@ public class ControllerConverter implements Initializable {
                 K.setText(KTemperature);
                 if (0 >= Double.valueOf(KTemperature)) {
                     clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(50);
+                    fadeTransition.play();
                 }
 
             }
@@ -273,6 +294,11 @@ public class ControllerConverter implements Initializable {
                 K.setText(KTemperature);
                 if (0 >= Double.valueOf(KTemperature)) {
                     clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(100);
+                    fadeTransition.play();
                 }
             } else {
                 String CTemperature = Double.toString(FahrenheitToCelsius(Double.parseDouble(F.getText())));
@@ -282,6 +308,11 @@ public class ControllerConverter implements Initializable {
                 K.setText(KTemperature);
                 if (0 >= Double.valueOf(KTemperature)) {
                     clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(100);
+                    fadeTransition.play();
                 }
             }
             addData(C, F, K);
@@ -301,6 +332,11 @@ public class ControllerConverter implements Initializable {
                 C.setText(CTemperature);
                 if (0 >= Double.valueOf(K.getText())) {
                     clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(100);
+                    fadeTransition.play();
                 }
             } else {
 
@@ -311,6 +347,11 @@ public class ControllerConverter implements Initializable {
                 C.setText(CTemperature);
                 if (0 >= Double.valueOf(K.getText())) {
                     clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(100);
+                    fadeTransition.play();
                 }
             }
             addData(C, F, K);
@@ -328,7 +369,7 @@ public class ControllerConverter implements Initializable {
 
     @FXML
     private void switchBetweenConverter(ActionEvent event) {
-        switchBetweenConverter(C, F, K);
+        switchBetweenConverter(C, F, K, errorMessage);
     }
 
     @FXML
