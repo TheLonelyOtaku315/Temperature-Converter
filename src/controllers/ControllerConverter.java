@@ -87,6 +87,7 @@ public class ControllerConverter implements Initializable {
         observableArrayList.add("Melting Point of Ice");
         observableArrayList.add("Absolute Zero");
         observableArrayList.add("Room Temperature");
+        observableArrayList.add("Body Temperature");
 
         comboBox.getItems().removeAll(comboBox.getItems());
         comboBox.getItems().addAll(observableArrayList);
@@ -175,6 +176,31 @@ public class ControllerConverter implements Initializable {
                     case "Room Temperature":
                         data.clear();
                         C.setText("22");
+
+                        if (decimalRestriction != null) {
+
+                            DecimalFormat df = new DecimalFormat(decimalRestriction);
+
+                            String CTemperature = df.format(Double.parseDouble(C.getText()));
+                            String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
+                            String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
+
+                            C.setText(CTemperature);
+                            F.setText(FTemperature);
+                            K.setText(KTemperature);
+
+                        } else {
+                            K.setText("295.15");
+                            F.setText("71.6");
+
+                        }
+
+                        addData(C, F, K);
+                        comboBox.setValue("...");
+                        break;
+                    case "Body Temperature":
+                        data.clear();
+                        C.setText("37");
 
                         if (decimalRestriction != null) {
 
