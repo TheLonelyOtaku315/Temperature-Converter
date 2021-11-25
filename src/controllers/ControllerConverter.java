@@ -72,6 +72,8 @@ public class ControllerConverter implements Initializable {
     private CategoryAxis x;
     @FXML
     private Label errorMessage;
+    @FXML
+    private Label temperarureType;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -96,6 +98,7 @@ public class ControllerConverter implements Initializable {
             if (newBox != null) {
                 switch (newBox) {
                     case "Boiling Point of Water":
+                        temperarureType.setText("Boiling Point of Water");
                         data.clear();
                         C.setText("100");
 
@@ -122,6 +125,8 @@ public class ControllerConverter implements Initializable {
 
                         break;
                     case "Melting Point of Ice":
+                        temperarureType.setText("Melting Point of Ice");
+
                         data.clear();
                         C.setText("0");
 
@@ -148,6 +153,8 @@ public class ControllerConverter implements Initializable {
 
                         break;
                     case "Absolute Zero":
+                        temperarureType.setText("Absolute Zero");
+
                         data.clear();
                         C.setText("-273.15");
 
@@ -174,6 +181,8 @@ public class ControllerConverter implements Initializable {
 
                         break;
                     case "Room Temperature":
+                        temperarureType.setText("Room Temperature");
+
                         data.clear();
                         C.setText("22");
 
@@ -199,6 +208,8 @@ public class ControllerConverter implements Initializable {
                         comboBox.setValue("...");
                         break;
                     case "Body Temperature":
+                        temperarureType.setText("Body Temperature");
+
                         data.clear();
                         C.setText("37");
 
@@ -264,7 +275,9 @@ public class ControllerConverter implements Initializable {
         stage.show();
     }
 
-    private static void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage) {
+    private static void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage, Label temperarureType) {
+        temperarureType.setText("User Temperature");
+
         if (!C.getText().equals("")) {
             data.clear();
 
@@ -395,7 +408,7 @@ public class ControllerConverter implements Initializable {
 
     @FXML
     private void switchBetweenConverter(ActionEvent event) {
-        switchBetweenConverter(C, F, K, errorMessage);
+        switchBetweenConverter(C, F, K, errorMessage, temperarureType);
     }
 
     @FXML

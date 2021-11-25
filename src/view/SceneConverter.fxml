@@ -72,6 +72,11 @@
                 </BarChart>
             <VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
                <children>
+                  <Label fx:id="temperarureType" style="-fx-text-fill: #000000;" text=" ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
                       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="277.0" prefWidth="452.0">
                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="333.0" minWidth="10.0" prefWidth="239.0" />
