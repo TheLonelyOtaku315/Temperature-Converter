@@ -257,7 +257,7 @@ public class ControllerConverter implements Initializable {
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
                     fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(50);
+                    fadeTransition.setCycleCount(25);
                     fadeTransition.play();
                 }
             } else {
@@ -272,7 +272,7 @@ public class ControllerConverter implements Initializable {
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
                     fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(50);
+                    fadeTransition.setCycleCount(25);
                     fadeTransition.play();
                 }
 
@@ -297,7 +297,7 @@ public class ControllerConverter implements Initializable {
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
                     fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(100);
+                    fadeTransition.setCycleCount(25);
                     fadeTransition.play();
                 }
             } else {
@@ -311,7 +311,7 @@ public class ControllerConverter implements Initializable {
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
                     fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(100);
+                    fadeTransition.setCycleCount(25);
                     fadeTransition.play();
                 }
             }
@@ -335,7 +335,7 @@ public class ControllerConverter implements Initializable {
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
                     fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(100);
+                    fadeTransition.setCycleCount(25);
                     fadeTransition.play();
                 }
             } else {
@@ -350,7 +350,7 @@ public class ControllerConverter implements Initializable {
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
                     fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(100);
+                    fadeTransition.setCycleCount(25);
                     fadeTransition.play();
                 }
             }
