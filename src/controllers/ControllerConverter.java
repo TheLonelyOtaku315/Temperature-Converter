@@ -241,6 +241,9 @@ public class ControllerConverter implements Initializable {
 
                 F.setText(FTemperature);
                 K.setText(KTemperature);
+                if (0 >= Double.valueOf(KTemperature)) {
+                    clear(C, F, K);
+                }
             } else {
 
                 String FTemperature = Double.toString(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
@@ -248,6 +251,9 @@ public class ControllerConverter implements Initializable {
 
                 F.setText(FTemperature);
                 K.setText(KTemperature);
+                if (0 >= Double.valueOf(KTemperature)) {
+                    clear(C, F, K);
+                }
 
             }
             addData(C, F, K);
@@ -265,14 +271,18 @@ public class ControllerConverter implements Initializable {
 
                 C.setText(CTemperature);
                 K.setText(KTemperature);
-
+                if (0 >= Double.valueOf(KTemperature)) {
+                    clear(C, F, K);
+                }
             } else {
                 String CTemperature = Double.toString(FahrenheitToCelsius(Double.parseDouble(F.getText())));
                 String KTemperature = Double.toString(FahrenheitToKelvin(Double.parseDouble(F.getText())));
 
                 C.setText(CTemperature);
                 K.setText(KTemperature);
-
+                if (0 >= Double.valueOf(KTemperature)) {
+                    clear(C, F, K);
+                }
             }
             addData(C, F, K);
 
@@ -289,7 +299,9 @@ public class ControllerConverter implements Initializable {
 
                 F.setText(FTemperature);
                 C.setText(CTemperature);
-
+                if (0 >= Double.valueOf(K.getText())) {
+                    clear(C, F, K);
+                }
             } else {
 
                 String CTemperature = Double.toString(KelvinToCelsius(Double.parseDouble(K.getText())));
@@ -297,7 +309,9 @@ public class ControllerConverter implements Initializable {
 
                 F.setText(FTemperature);
                 C.setText(CTemperature);
-
+                if (0 >= Double.valueOf(K.getText())) {
+                    clear(C, F, K);
+                }
             }
             addData(C, F, K);
 
@@ -328,7 +342,7 @@ public class ControllerConverter implements Initializable {
 
     private static void addData(TextField C, TextField F, TextField K) {
         data.clear();
-        
+
         XYChart.Series<String, Number> TemperatureC = new XYChart.Series<>();
         TemperatureC.setName("°C");
         TemperatureC.getData().add(new XYChart.Data<>("", Double.parseDouble(C.getText())));
