@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.Axis;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -30,6 +31,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import static jfxsample.converter.CelsiusToFahrenheit;
@@ -49,10 +53,10 @@ public class ControllerConverter implements Initializable {
     private Stage stage;
     private Scene scene;
     private static String decimalRestriction;
+    private static String illustrationRestriction;
 
     @FXML
     private ComboBox<String> comboBox;
-
     @FXML
     private BorderPane converter;
     @FXML
@@ -61,29 +65,216 @@ public class ControllerConverter implements Initializable {
     private TextField F;
     @FXML
     private TextField K;
-    @FXML
-    private BarChart<String, Number> temperatureChart;
 
-    private static ObservableList<XYChart.Series<String, Number>> data
-            = FXCollections.<XYChart.Series<String, Number>>observableArrayList();
-    @FXML
-    private NumberAxis y;
-    @FXML
-    private CategoryAxis x;
+//    private BarChart temperatureChart;
+    private static ObservableList<XYChart.Series<String, Number>> dataV = FXCollections.<XYChart.Series<String, Number>>observableArrayList();
+    private static ObservableList<XYChart.Series<Number, String>> dataH = FXCollections.<XYChart.Series<Number, String>>observableArrayList();
     @FXML
     private Label errorMessage;
     @FXML
     private Label temperarureType;
+    @FXML
+    private VBox illustration;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        decimalRestriction = ControllerSetting.decimalWant;
+        decimalRestriction = ControllerSetting.decimalSet;
 
         FadeTransition fader = new FadeTransition(Duration.seconds(0.1), errorMessage);
         fader.setToValue(0);
         fader.play();
 
+        comboBoxOption();
+
+        C.setOnMouseClicked(event -> clear(C, F, K));
+        F.setOnMouseClicked(event -> clear(C, F, K));
+        K.setOnMouseClicked(event -> clear(C, F, K));
+
+        illustrationRestriction = ControllerSetting.illustrationSet;
+        if ("Horizontal".equals(illustrationRestriction)) {
+            CategoryAxis Y = new CategoryAxis();
+            NumberAxis X = new NumberAxis();
+            BarChart< Number, String> temperatureChart;
+            temperatureChart = new BarChart<>(X, Y);
+            temperatureChart.setData(dataH);
+            System.out.println("H work");
+            illustration.getChildren().add(temperatureChart);
+        } else {
+            CategoryAxis X = new CategoryAxis();
+            NumberAxis Y = new NumberAxis();
+            BarChart<String, Number> temperatureChart;
+            temperatureChart = new BarChart<>(X, Y);
+            temperatureChart.setData(dataV);
+            System.out.println("V work");
+            illustration.getChildren().add(temperatureChart);
+        }
+    }
+
+    @FXML
+    public void switchToSetting(ActionEvent event) throws IOException {
+        dataV.clear();
+        dataH.clear();
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SceneSetting.fxml"));
+        String css = converter.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
+        root.getStylesheets().clear();
+        root.getStylesheets().add(css);
+
+        stage = (Stage) converter.getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void switchToHistory(ActionEvent event) throws IOException {
+        dataV.clear();
+        dataH.clear();
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SceneHistory.fxml"));
+        String css = converter.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
+        root.getStylesheets().clear();
+        root.getStylesheets().add(css);
+
+        stage = (Stage) converter.getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private static void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage, Label temperarureType) {
+        temperarureType.setText("User Temperature");
+
+        if (!C.getText().equals("")) {
+            dataV.clear();
+            dataH.clear();
+
+            decimalRestriction = ControllerSetting.decimalSet;
+
+            if (decimalRestriction != null) {
+                DecimalFormat df = new DecimalFormat(decimalRestriction);
+
+                String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
+                String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
+
+                F.setText(FTemperature);
+                K.setText(KTemperature);
+                if (0 > Double.valueOf(KTemperature)) {
+                    clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(25);
+                    fadeTransition.play();
+                }
+            } else {
+
+                String FTemperature = Double.toString(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
+                String KTemperature = Double.toString(CelsiusToKelvin(Double.parseDouble(C.getText())));
+
+                F.setText(FTemperature);
+                K.setText(KTemperature);
+                if (0 > Double.valueOf(KTemperature)) {
+                    clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(25);
+                    fadeTransition.play();
+                }
+
+            }
+            addData(C, F, K);
+
+        } else if (!F.getText().equals("")) {
+            dataV.clear();
+            dataH.clear();
+
+            decimalRestriction = ControllerSetting.decimalSet;
+
+            if (decimalRestriction != null) {
+                DecimalFormat df = new DecimalFormat(decimalRestriction);
+
+                String CTemperature = df.format(FahrenheitToCelsius(Double.parseDouble(F.getText())));
+                String KTemperature = df.format(FahrenheitToKelvin(Double.parseDouble(F.getText())));
+
+                C.setText(CTemperature);
+                K.setText(KTemperature);
+                if (0 > Double.valueOf(KTemperature)) {
+                    clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(25);
+                    fadeTransition.play();
+                }
+            } else {
+                String CTemperature = Double.toString(FahrenheitToCelsius(Double.parseDouble(F.getText())));
+                String KTemperature = Double.toString(FahrenheitToKelvin(Double.parseDouble(F.getText())));
+
+                C.setText(CTemperature);
+                K.setText(KTemperature);
+                if (0 > Double.valueOf(KTemperature)) {
+                    clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(25);
+                    fadeTransition.play();
+                }
+            }
+            addData(C, F, K);
+
+        } else if (!K.getText().equals("")) {
+            dataV.clear();
+            dataH.clear();
+
+            decimalRestriction = ControllerSetting.decimalSet;
+
+            if (decimalRestriction != null) {
+                DecimalFormat df = new DecimalFormat(decimalRestriction);
+
+                String CTemperature = df.format(KelvinToCelsius(Double.parseDouble(K.getText())));
+                String FTemperature = df.format(KelvinToFahrenheit(Double.parseDouble(K.getText())));
+
+                F.setText(FTemperature);
+                C.setText(CTemperature);
+                if (0 > Double.valueOf(K.getText())) {
+                    clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(25);
+                    fadeTransition.play();
+                }
+            } else {
+
+                String CTemperature = Double.toString(KelvinToCelsius(Double.parseDouble(K.getText())));
+                String FTemperature = Double.toString(KelvinToFahrenheit(Double.parseDouble(K.getText())));
+
+                F.setText(FTemperature);
+                C.setText(CTemperature);
+                if (0 > Double.valueOf(K.getText())) {
+                    clear(C, F, K);
+                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.setCycleCount(25);
+                    fadeTransition.play();
+                }
+            }
+            addData(C, F, K);
+
+        }
+    }
+
+    @FXML
+    private void switchBetweenConverter(ActionEvent event) {
+        switchBetweenConverter(C, F, K, errorMessage, temperarureType);
+    }
+
+    private void comboBoxOption() {
         ArrayList<String> observableArrayList = new ArrayList<>();
         observableArrayList.add("Boiling Point of Water");
         observableArrayList.add("Melting Point of Ice");
@@ -99,7 +290,8 @@ public class ControllerConverter implements Initializable {
                 switch (newBox) {
                     case "Boiling Point of Water":
                         temperarureType.setText("Boiling Point of Water");
-                        data.clear();
+                        dataV.clear();
+                        dataH.clear();
                         C.setText("100");
 
                         if (decimalRestriction != null) {
@@ -127,7 +319,8 @@ public class ControllerConverter implements Initializable {
                     case "Melting Point of Ice":
                         temperarureType.setText("Melting Point of Ice");
 
-                        data.clear();
+                        dataV.clear();
+                        dataH.clear();
                         C.setText("0");
 
                         if (decimalRestriction != null) {
@@ -155,7 +348,8 @@ public class ControllerConverter implements Initializable {
                     case "Absolute Zero":
                         temperarureType.setText("Absolute Zero");
 
-                        data.clear();
+                        dataV.clear();
+                        dataH.clear();
                         C.setText("-273.15");
 
                         if (decimalRestriction != null) {
@@ -183,7 +377,8 @@ public class ControllerConverter implements Initializable {
                     case "Room Temperature":
                         temperarureType.setText("Room Temperature");
 
-                        data.clear();
+                        dataV.clear();
+                        dataH.clear();
                         C.setText("22");
 
                         if (decimalRestriction != null) {
@@ -210,7 +405,8 @@ public class ControllerConverter implements Initializable {
                     case "Body Temperature":
                         temperarureType.setText("Body Temperature");
 
-                        data.clear();
+                        dataV.clear();
+                        dataH.clear();
                         C.setText("37");
 
                         if (decimalRestriction != null) {
@@ -238,182 +434,23 @@ public class ControllerConverter implements Initializable {
             }
         });
 
-        C.setOnMouseClicked(event -> clear(C, F, K));
-        F.setOnMouseClicked(event -> clear(C, F, K));
-        K.setOnMouseClicked(event -> clear(C, F, K));
+        comboBox.setOnMouseClicked(event -> clear(C, F, K));
 
-        temperatureChart.setData(data);
     }
 
     @FXML
-    public void switchToSetting(ActionEvent event) throws IOException {
-        data.clear();
-
-        Parent root = FXMLLoader.load(getClass().getResource("/view/SceneSetting.fxml"));
-        String css = converter.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
-        root.getStylesheets().clear();
-        root.getStylesheets().add(css);
-
-        stage = (Stage) converter.getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void switchToHistory(ActionEvent event) throws IOException {
-        data.clear();
-
-        Parent root = FXMLLoader.load(getClass().getResource("/view/SceneHistory.fxml"));
-        String css = converter.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
-        root.getStylesheets().clear();
-        root.getStylesheets().add(css);
-
-        stage = (Stage) converter.getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private static void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage, Label temperarureType) {
-        temperarureType.setText("User Temperature");
-
-        if (!C.getText().equals("")) {
-            data.clear();
-
-            decimalRestriction = ControllerSetting.decimalWant;
-
-            if (decimalRestriction != null) {
-                DecimalFormat df = new DecimalFormat(decimalRestriction);
-
-                String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
-                String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
-
-                F.setText(FTemperature);
-                K.setText(KTemperature);
-                if (0 >= Double.valueOf(KTemperature)) {
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
-                }
-            } else {
-
-                String FTemperature = Double.toString(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
-                String KTemperature = Double.toString(CelsiusToKelvin(Double.parseDouble(C.getText())));
-
-                F.setText(FTemperature);
-                K.setText(KTemperature);
-                if (0 >= Double.valueOf(KTemperature)) {
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
-                }
-
-            }
-            addData(C, F, K);
-
-        } else if (!F.getText().equals("")) {
-            data.clear();
-
-            decimalRestriction = ControllerSetting.decimalWant;
-
-            if (decimalRestriction != null) {
-                DecimalFormat df = new DecimalFormat(decimalRestriction);
-
-                String CTemperature = df.format(FahrenheitToCelsius(Double.parseDouble(F.getText())));
-                String KTemperature = df.format(FahrenheitToKelvin(Double.parseDouble(F.getText())));
-
-                C.setText(CTemperature);
-                K.setText(KTemperature);
-                if (0 >= Double.valueOf(KTemperature)) {
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
-                }
-            } else {
-                String CTemperature = Double.toString(FahrenheitToCelsius(Double.parseDouble(F.getText())));
-                String KTemperature = Double.toString(FahrenheitToKelvin(Double.parseDouble(F.getText())));
-
-                C.setText(CTemperature);
-                K.setText(KTemperature);
-                if (0 >= Double.valueOf(KTemperature)) {
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
-                }
-            }
-            addData(C, F, K);
-
-        } else if (!K.getText().equals("")) {
-            data.clear();
-
-            decimalRestriction = ControllerSetting.decimalWant;
-
-            if (decimalRestriction != null) {
-                DecimalFormat df = new DecimalFormat(decimalRestriction);
-
-                String CTemperature = df.format(KelvinToCelsius(Double.parseDouble(K.getText())));
-                String FTemperature = df.format(KelvinToFahrenheit(Double.parseDouble(K.getText())));
-
-                F.setText(FTemperature);
-                C.setText(CTemperature);
-                if (0 >= Double.valueOf(K.getText())) {
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
-                }
-            } else {
-
-                String CTemperature = Double.toString(KelvinToCelsius(Double.parseDouble(K.getText())));
-                String FTemperature = Double.toString(KelvinToFahrenheit(Double.parseDouble(K.getText())));
-
-                F.setText(FTemperature);
-                C.setText(CTemperature);
-                if (0 >= Double.valueOf(K.getText())) {
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
-                }
-            }
-            addData(C, F, K);
-
-        }
-    }
-
-    private static void clear(TextField C, TextField F, TextField K) {
-        data.clear();
+    private void clear(ActionEvent event) {
+        dataV.clear();
+        dataH.clear();
 
         C.setText("");
         F.setText("");
         K.setText("");
     }
 
-    @FXML
-    private void switchBetweenConverter(ActionEvent event) {
-        switchBetweenConverter(C, F, K, errorMessage, temperarureType);
-    }
-
-    @FXML
-    private void clear(ActionEvent event) {
-        data.clear();
+    private static void clear(TextField C, TextField F, TextField K) {
+        dataV.clear();
+        dataH.clear();
 
         C.setText("");
         F.setText("");
@@ -421,20 +458,36 @@ public class ControllerConverter implements Initializable {
     }
 
     private static void addData(TextField C, TextField F, TextField K) {
-        data.clear();
+        dataV.clear();
+        dataH.clear();
+        illustrationRestriction = ControllerSetting.illustrationSet;
+        XYChart.Series<String, Number> VTemperatureC = new XYChart.Series<>();
+        VTemperatureC.setName("°C");
+        VTemperatureC.getData().add(new XYChart.Data<>("", Double.parseDouble(C.getText())));
 
-        XYChart.Series<String, Number> TemperatureC = new XYChart.Series<>();
-        TemperatureC.setName("°C");
-        TemperatureC.getData().add(new XYChart.Data<>("", Double.parseDouble(C.getText())));
+        XYChart.Series<String, Number> VTemperatureF = new XYChart.Series<>();
+        VTemperatureF.setName("°F");
+        VTemperatureF.getData().add(new XYChart.Data<>("", Double.parseDouble(F.getText())));
 
-        XYChart.Series<String, Number> TemperatureF = new XYChart.Series<>();
-        TemperatureF.setName("°F");
-        TemperatureF.getData().add(new XYChart.Data<>("", Double.parseDouble(F.getText())));
+        XYChart.Series<String, Number> VTemperatureK = new XYChart.Series<>();
+        VTemperatureK.setName(" K");
+        VTemperatureK.getData().add(new XYChart.Data<>("", Double.parseDouble(K.getText())));
 
-        XYChart.Series<String, Number> TemperatureK = new XYChart.Series<>();
-        TemperatureK.setName(" K");
-        TemperatureK.getData().add(new XYChart.Data<>("", Double.parseDouble(K.getText())));
+        dataV.addAll(VTemperatureC, VTemperatureF, VTemperatureK);
 
-        data.addAll(TemperatureC, TemperatureF, TemperatureK);
+        XYChart.Series< Number, String> HTemperatureC = new XYChart.Series<>();
+        HTemperatureC.setName("°C");
+        HTemperatureC.getData().add(new XYChart.Data<>(Double.parseDouble(C.getText()), ""));
+
+        XYChart.Series<Number, String> HTemperatureF = new XYChart.Series<>();
+        HTemperatureF.setName("°F");
+        HTemperatureF.getData().add(new XYChart.Data<>(Double.parseDouble(F.getText()), ""));
+
+        XYChart.Series< Number, String> HTemperatureK = new XYChart.Series<>();
+        HTemperatureK.setName(" K");
+        HTemperatureK.getData().add(new XYChart.Data<>(Double.parseDouble(K.getText()), ""));
+
+        dataH.addAll(HTemperatureC, HTemperatureF, HTemperatureK);
+
     }
 }

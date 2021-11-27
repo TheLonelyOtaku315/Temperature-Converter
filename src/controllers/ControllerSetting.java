@@ -36,7 +36,8 @@ public class ControllerSetting implements Initializable {
 
     private Stage stage;
     private Scene scene;
-    static String decimalWant;
+     static String decimalSet;
+    static String illustrationSet;
 
     @FXML
     private BorderPane setting;
@@ -164,7 +165,7 @@ public class ControllerSetting implements Initializable {
         System.out.println(decimalSwitch.getValue());
 
         if (decimalSwitch.getValue() != null) {
-            decimalWant = switch (decimalSwitch.getValue()) {
+            decimalSet = switch (decimalSwitch.getValue()) {
                 case "0" ->
                     "#";
                 case "1" ->
@@ -191,6 +192,31 @@ public class ControllerSetting implements Initializable {
 
             FadeTransition fader1 = createFader1(decimalSave);
             FadeTransition fader2 = createFader2(decimalSave);
+
+            SequentialTransition blinkThenFade = new SequentialTransition(
+                    fader1,
+                    fader2
+            );
+
+            blinkThenFade.play();
+        }
+    }
+    @FXML
+    public void getGraphIllustration() {
+        System.out.println(illustrationSwitch.getValue());
+
+        if (illustrationSwitch.getValue() != null) {
+            illustrationSet = switch (illustrationSwitch.getValue()) {
+                case "Vertical Graph" ->
+                    "Vertical";
+                case "Horizontal Graph" ->
+                    "Horizontal";
+                default ->
+                    "Vertical";
+            };
+
+            FadeTransition fader1 = createFader1(illustrationSave);
+            FadeTransition fader2 = createFader2(illustrationSave);
 
             SequentialTransition blinkThenFade = new SequentialTransition(
                     fader1,

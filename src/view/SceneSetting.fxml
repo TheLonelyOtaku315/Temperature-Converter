@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="setting" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="primary-color" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerSetting">
+<BorderPane fx:id="setting" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" styleClass="primary-color" stylesheets="@../styles/light.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ControllerSetting">
    <top>
       <VBox prefHeight="98.0" prefWidth="1000.0" styleClass="primary-color" BorderPane.alignment="CENTER">
          <opaqueInsets>
@@ -115,7 +115,7 @@
                      </font>
                   </Label>
                   <ComboBox fx:id="illustrationSwitch" prefWidth="150.0" styleClass="secondary-color" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                  <Button mnemonicParsing="false" styleClass="secondary-color" text="Save" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+                  <Button mnemonicParsing="false" onAction="#getGraphIllustration" styleClass="secondary-color" text="Save" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>

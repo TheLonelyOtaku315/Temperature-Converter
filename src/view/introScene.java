@@ -34,7 +34,7 @@ public class introScene {
     public introScene(Button btn) {
 
         GridPane grid = new GridPane();
-        scene = new Scene(grid, 1000, 600);
+        scene = new Scene(grid, 1000, 700);
 
         Text txt = new Text();
         txt.setText("Wecome to the main page\n"
