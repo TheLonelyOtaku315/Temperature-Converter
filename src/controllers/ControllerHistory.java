@@ -64,6 +64,7 @@ public class ControllerHistory implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println(XMLHandlerControllers.read());
         
     }
 

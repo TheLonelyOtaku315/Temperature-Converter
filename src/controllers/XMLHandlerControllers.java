@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Scanner;
 import javafx.scene.control.DatePicker;
 import javafx.util.StringConverter;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -93,14 +94,22 @@ public class XMLHandlerControllers {
 
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    String replaceAll = line.replaceAll("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
-                    old = old + replaceAll;
+                    String replaceAll = line.replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
+                    String replaceAll2 = replaceAll.replace("<data>", "");
+                    String replaceAll3 = replaceAll2.replace("</data>", "");
+                    old = old + replaceAll3;
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
             System.out.println(old);
+            System.out.println("***************************");
+
+            //count number of convertion 
+            System.out.println("***************************");
+            int numberOfConvertion = countOccurrences(old, "K:");
+            System.out.println(numberOfConvertion);
             System.out.println("***************************");
 
             // change history.xml data
@@ -117,8 +126,11 @@ public class XMLHandlerControllers {
 
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    String replaceAll = line.replaceAll("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
-                    update = update + replaceAll;
+                    String replaceAll = line.replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
+                    String replaceAll2 = replaceAll.replace("<Converstion>", "<Converstion id =\"" + (numberOfConvertion + 1) + "\">");
+                    String replaceAll3 = replaceAll2.replace("<data>", "");
+                    String replaceAll4 = replaceAll3.replace("</data>", "");
+                    update = update + replaceAll4;
                 }
 
             } catch (IOException e) {
@@ -126,9 +138,13 @@ public class XMLHandlerControllers {
             }
             System.out.println(update);
             System.out.println("***************************");
-
+            //count number of convertion 
+            System.out.println("***************************");
+            int x = countOccurrences(old, "K:");
+            System.out.println(x);
+            System.out.println("***************************");
             //Write the xml entirely
-            String all = old + update;
+            String all = "<data>" + old + update + "</data>";
             try (FileWriter writer = new FileWriter("history.xml");
                     BufferedWriter bw = new BufferedWriter(writer)) {
 
@@ -144,18 +160,29 @@ public class XMLHandlerControllers {
         }
     }
 
-    public String read() {
+    public static String read() {
+
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
         try {
 
+            // optional, but recommended
+            // process XML securely, avoid attacks like XML External Entities (XXE)
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+
+            // parse XML file
             DocumentBuilder db = dbf.newDocumentBuilder();
 
-            Document doc = db.parse(new File(xml.XMLFilePath));
+            Document doc = db.parse(new File("history.xml"));
+
+            // optional, but recommended
+            // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+            doc.getDocumentElement().normalize();
 
             System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
             System.out.println("------");
 
+            // get <staff>
             NodeList list = doc.getElementsByTagName("Converstion");
 
             for (int temp = 0; temp < list.getLength(); temp++) {
@@ -166,26 +193,51 @@ public class XMLHandlerControllers {
 
                     Element element = (Element) node;
 
-                    String Date = element.getElementsByTagName("Name").item(0).getTextContent();
-                    String Information = element.getElementsByTagName("Bounty").item(0).getTextContent();
-                    String InformationEnter = element.getElementsByTagName("Path").item(0).getTextContent();
-                    String InformationGiven = element.getElementsByTagName("Path").item(0).getTextContent();
+                    // get staff's attribute
+                    String id = element.getAttribute("id");
 
-                    String answer = "Current Element :" + node.getNodeName()
-                            + "\nDate : " + Date
-                            + "\nInformation : " + Information
-                            + "\nInformation Enter : " + InformationEnter
-                            + "\nInformation Given : " + InformationGiven;
-                    return answer;
+                    // get text
+                    String date = element.getElementsByTagName("Date").item(0).getTextContent();
+                    String info = element.getElementsByTagName("Information").item(0).getTextContent();
+                    String enter = element.getElementsByTagName("InformationEnter").item(0).getTextContent();
+                    String given = element.getElementsByTagName("InformationGiven").item(0).getTextContent();
+
+                    System.out.println("Current Element :" + node.getNodeName());
+                    System.out.println("Id : " + id);
+                    System.out.println("Date : " + date);
+                    System.out.println("Information : " + info);
+                    System.out.println("Information Enter : " + enter);
+                    System.out.println("Information Given" + given);
+                    System.out.println();
+
                 }
             }
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
         }
         return null;
+
     }
 
     public void updateView() {
         xmlView.print(read());
+    }
+
+    static int countOccurrences(String str, String word) {
+        // split the string by spaces in a
+        String a[] = str.split(" ");
+
+        // search for pattern in a
+        int count = 0;
+        for (int i = 0; i < a.length; i++) {
+            // if match found increase count        
+
+            if (word.equals(a[i])) {
+                count++;
+            }
+        }
+
+        return count;
     }
 }

@@ -1,8 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><Converstion>
-    <Date>2021/11/27_19:46:30</Date>
-    <Information>Boiling Point of Water</Information>
-    <InformationEnter/>
-    <InformationGiven> °C: 100
-        °F: 212
-        K: 373.15</InformationGiven>
-</Converstion>
+<data>
+    <Converstion id ="1">
+        <Date>2021/11/28_13:03:05</Date>
+        <Information>User Temperature</Information>
+        <InformationEnter> °C: 40</InformationEnter>
+        <InformationGiven> °F: 104.0  K: 313.15</InformationGiven>
+    </Converstion>
+    <Converstion id ="2">
+        <Date>2021/11/28_13:03:45</Date>
+        <Information>Boiling Point of Water</Information>
+        <InformationEnter/>
+        <InformationGiven> °C: 100 °F: 212  K: 373.15</InformationGiven>
+    </Converstion>
+    <Converstion id ="3">
+        <Date>2021/11/28_13:03:48</Date>
+        <Information>Boiling Point of Water</Information>
+        <InformationEnter/>
+        <InformationGiven> °C: 0 °F: 32  K: 273.15</InformationGiven>
+    </Converstion>
+</data>
