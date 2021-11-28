@@ -5,17 +5,23 @@
  */
 package controllers;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Scanner;
 import javafx.scene.control.DatePicker;
 import javafx.util.StringConverter;
 import javax.xml.parsers.DocumentBuilder;
@@ -40,8 +46,6 @@ public class XMLHandlerControllers {
      *
      * @param convertion2
      */
-    
-
     private final XMLHandler xml;
     private final XMLHandlerView xmlView;
 
@@ -77,20 +81,62 @@ public class XMLHandlerControllers {
             Element enter1 = document.createElement("InformationEnter");
             enter1.appendChild(document.createTextNode(convertion.getInformationEnter()));
             root.appendChild(enter1);
-            
+
             // Information given element
             Element given1 = document.createElement("InformationGiven");
             given1.appendChild(document.createTextNode(convertion.getInformationGiven()));
             root.appendChild(given1);
 
-            // create the xml file
+            // read history.xml before chnaging data
+            String old = "";
+            try (BufferedReader reader = new BufferedReader(new FileReader(new File("history.xml")))) {
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String replaceAll = line.replaceAll("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
+                    old = old + replaceAll;
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(old);
+            System.out.println("***************************");
+
+            // change history.xml data
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
-            
+
             DOMSource domSource = new DOMSource(document);
             StreamResult streamResult = new StreamResult(xmlFile);
-
             transformer.transform(domSource, streamResult);
+
+            // read history.xml new data
+            String update = "";
+            try (BufferedReader reader = new BufferedReader(new FileReader(new File("history.xml")))) {
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String replaceAll = line.replaceAll("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
+                    update = update + replaceAll;
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(update);
+            System.out.println("***************************");
+
+            //Write the xml entirely
+            String all = old + update;
+            try (FileWriter writer = new FileWriter("history.xml");
+                    BufferedWriter bw = new BufferedWriter(writer)) {
+
+                bw.write(all);
+
+            } catch (IOException e) {
+                System.err.format("IOException: %s%n", e);
+            }
 
             System.out.println("Done creating XML File");
 
