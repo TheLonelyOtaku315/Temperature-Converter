@@ -60,11 +60,11 @@
          <children>
             <TableView fx:id="table" prefHeight="570.0" prefWidth="685.0" styleClass="secondary-color">
               <columns>
-                <TableColumn fx:id="date" prefWidth="92.0" text="Date" />
-                  <TableColumn fx:id="info" prefWidth="142.0" text="Information" />
-                  <TableColumn fx:id="enter" minWidth="0.0" prefWidth="144.0" text="Information you enter:" />
-                  <TableColumn fx:id="given" minWidth="0.0" prefWidth="222.0" text="Information Given to you: " />
-                  <TableColumn fx:id="delete" minWidth="0.0" prefWidth="83.0" text="Delete" />
+                <TableColumn fx:id="date" prefWidth="123.0" text="Date" />
+                  <TableColumn fx:id="info" prefWidth="131.0" text="Information" />
+                  <TableColumn fx:id="enter" minWidth="0.0" prefWidth="140.0" text="Information you enter:" />
+                  <TableColumn fx:id="given" minWidth="0.0" prefWidth="223.0" text="Information Given to you: " />
+                  <TableColumn fx:id="delete" minWidth="0.0" prefWidth="66.0" text="Delete" />
               </columns>
                <HBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -105,7 +105,7 @@
                         <ComboBox prefWidth="150.0" styleClass="secondary-color" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" styleClass="secondary-color" text="Clear All">
+                  <Button mnemonicParsing="false" onAction="#switchToConverter" prefHeight="30.0" prefWidth="90.0" styleClass="secondary-color" text="Clear All">
                      <VBox.margin>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="60.0" />
                      </VBox.margin>

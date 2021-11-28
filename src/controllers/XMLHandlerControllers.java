@@ -22,7 +22,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Scanner;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -138,11 +147,7 @@ public class XMLHandlerControllers {
             }
             System.out.println(update);
             System.out.println("***************************");
-            //count number of convertion 
-            System.out.println("***************************");
-            int x = countOccurrences(old, "K:");
-            System.out.println(x);
-            System.out.println("***************************");
+
             //Write the xml entirely
             String all = "<data>" + old + update + "</data>";
             try (FileWriter writer = new FileWriter("history.xml");
@@ -160,9 +165,11 @@ public class XMLHandlerControllers {
         }
     }
 
-    public static String read() {
+    public static ObservableList read(TableView table, TableColumn date1, TableColumn info1, TableColumn enter1, TableColumn given1, TableColumn<Convertion, Convertion> delete) {
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+        ObservableList<Convertion> data = FXCollections.observableArrayList();
 
         try {
 
@@ -175,8 +182,6 @@ public class XMLHandlerControllers {
 
             Document doc = db.parse(new File("history.xml"));
 
-            // optional, but recommended
-            // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
 
             System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
@@ -210,21 +215,54 @@ public class XMLHandlerControllers {
                     System.out.println("Information Given" + given);
                     System.out.println();
 
+                    Convertion convertion = new Convertion(date, info, enter, given);
+                    data.add(convertion);
+
                 }
             }
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
         }
-        return null;
+        return data;
 
     }
 
-    public void updateView() {
-        xmlView.print(read());
+    private static void addIntTable(ObservableList data, TableView table, TableColumn date, TableColumn info, TableColumn enter, TableColumn given, TableColumn<Convertion, Convertion> delete) {
+        date.setCellValueFactory(
+                new PropertyValueFactory<Convertion, String>("date"));
+
+        info.setCellValueFactory(
+                new PropertyValueFactory<Convertion, String>("information"));
+
+        enter.setCellValueFactory(
+                new PropertyValueFactory<Convertion, String>("informationEnter"));
+
+        given.setCellValueFactory(
+                new PropertyValueFactory<Convertion, String>("informationGiven"));
+
+        delete.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+        delete.setCellFactory(param -> new TableCell<Convertion, Convertion>() {
+            private final Button deleteButton = new Button("Delete");
+
+            @Override
+            protected void updateItem(Convertion task, boolean empty) {
+                super.updateItem(task, empty);
+
+                if (task == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                setGraphic(deleteButton);
+                deleteButton.setOnAction(event -> getTableView().getItems().remove(task)
+                );
+            }
+        });
+
+        table.setItems(data);
     }
 
-    static int countOccurrences(String str, String word) {
+    private static int countOccurrences(String str, String word) {
         // split the string by spaces in a
         String a[] = str.split(" ");
 

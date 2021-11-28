@@ -330,7 +330,7 @@ public class ControllerConverter implements Initializable {
 
                         break;
                     case "Melting Point of Ice":
-                        String info1 = "Boiling Point of Water";
+                        String info1 = "Melting Point of Ice";
                         temperarureType.setText(info1);
                         dataV.clear();
                         dataH.clear();
@@ -360,7 +360,7 @@ public class ControllerConverter implements Initializable {
 
                         break;
                     case "Absolute Zero":
-                        String info2 = "Boiling Point of Water";
+                        String info2 = "Absolute Zero";
                         temperarureType.setText(info2);
                         dataV.clear();
                         dataH.clear();
@@ -390,7 +390,7 @@ public class ControllerConverter implements Initializable {
 
                         break;
                     case "Room Temperature":
-                        String info3 = "Boiling Point of Water";
+                        String info3 = "Room Temperature";
                         temperarureType.setText(info3);
                         dataV.clear();
                         dataH.clear();
@@ -419,7 +419,7 @@ public class ControllerConverter implements Initializable {
                         comboBox.setValue("...");
                         break;
                     case "Body Temperature":
-                        String info4 = "Boiling Point of Water";
+                        String info4 = "Body Temperature";
                         temperarureType.setText(info4);
                         dataV.clear();
                         dataH.clear();

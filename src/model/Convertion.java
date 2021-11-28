@@ -11,14 +11,30 @@ package model;
  */
 public class Convertion {
 
+    private String date;
     private String information;
     private String informationEnter;
-    private String InformationGiven;
+    private String informationGiven;
 
+    public Convertion(String date, String information, String informationEnter, String InformationGiven) {
+        this.date = date;
+        this.information = information;
+        this.informationEnter = informationEnter;
+        this.informationGiven = InformationGiven;
+    }
+    
     public Convertion(String information, String informationEnter, String InformationGiven) {
         this.information = information;
         this.informationEnter = informationEnter;
-        this.InformationGiven = InformationGiven;
+        this.informationGiven = InformationGiven;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getInformation() {
@@ -38,16 +54,16 @@ public class Convertion {
     }
 
     public String getInformationGiven() {
-        return InformationGiven;
+        return informationGiven;
     }
 
     public void setInformationGiven(String InformationGiven) {
-        this.InformationGiven = InformationGiven;
+        this.informationGiven = InformationGiven;
     }
 
     @Override
     public String toString() {
-        return "Convertion{" + "information=" + information + ", informationEnter=" + informationEnter + ", InformationGiven=" + InformationGiven + '}';
+        return "Convertion{" + "information=" + information + ", informationEnter=" + informationEnter + ", InformationGiven=" + informationGiven + '}';
     }
 
 }
