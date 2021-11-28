@@ -71,10 +71,11 @@ public class ControllerHistory implements Initializable {
     private TableColumn<Convertion, Convertion> delete;
 
     private static File xmlFile = new File("history.xml");
+    private static ObservableList list;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ObservableList list = (XMLHandlerControllers.read(table, given, info, enter, given, delete));
+        list = (XMLHandlerControllers.read(table, given, info, enter, given, delete));
         addIntTable(list, table, date, info, enter, given, delete);
 
     }
@@ -144,7 +145,8 @@ public class ControllerHistory implements Initializable {
     }
 
     @FXML
-    private static void clearHistory(ActionEvent event) {
+    private void clearHistory(ActionEvent event) {
+        list.clear();
 
         try (FileWriter writer = new FileWriter("history.xml");
                 BufferedWriter bw = new BufferedWriter(writer)) {
@@ -158,4 +160,6 @@ public class ControllerHistory implements Initializable {
         System.out.println("Done creating XML File");
 
     }
+
+    
 }

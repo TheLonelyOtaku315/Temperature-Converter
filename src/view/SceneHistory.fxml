@@ -105,7 +105,7 @@
                         <ComboBox prefWidth="150.0" styleClass="secondary-color" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <Button mnemonicParsing="false" onAction="#switchToConverter" prefHeight="30.0" prefWidth="90.0" styleClass="secondary-color" text="Clear All">
+                  <Button mnemonicParsing="false" onAction="#clearHistory" prefHeight="30.0" prefWidth="90.0" styleClass="secondary-color" text="Clear All">
                      <VBox.margin>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="60.0" />
                      </VBox.margin>

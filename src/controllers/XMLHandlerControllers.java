@@ -136,8 +136,7 @@ public class XMLHandlerControllers {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String replaceAll = line.replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
-                    String replaceAll2 = replaceAll.replace("<Converstion>", "<Converstion id =\"" + (numberOfConvertion + 1) + "\">");
-                    String replaceAll3 = replaceAll2.replace("<data>", "");
+                    String replaceAll3 = replaceAll.replace("<data>", "");
                     String replaceAll4 = replaceAll3.replace("</data>", "");
                     update = update + replaceAll4;
                 }
