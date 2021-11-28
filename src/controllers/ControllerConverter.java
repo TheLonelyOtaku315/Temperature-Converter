@@ -10,7 +10,6 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,10 +18,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.Axis;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -32,8 +29,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import static jfxsample.converter.CelsiusToFahrenheit;
@@ -42,6 +37,7 @@ import static jfxsample.converter.FahrenheitToCelsius;
 import static jfxsample.converter.FahrenheitToKelvin;
 import static jfxsample.converter.KelvinToCelsius;
 import static jfxsample.converter.KelvinToFahrenheit;
+import model.Convertion;
 
 /**
  * FXML Controller class
@@ -144,7 +140,8 @@ public class ControllerConverter implements Initializable {
     }
 
     private static void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage, Label temperarureType) {
-        temperarureType.setText("User Temperature");
+        String info = "User Temperature";
+        temperarureType.setText(info);
 
         if (!C.getText().equals("")) {
             dataV.clear();
@@ -161,6 +158,7 @@ public class ControllerConverter implements Initializable {
                 F.setText(FTemperature);
                 K.setText(KTemperature);
                 if (0 > Double.valueOf(KTemperature)) {
+                    temperarureType.setText("Error");
                     clear(C, F, K);
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
@@ -176,6 +174,7 @@ public class ControllerConverter implements Initializable {
                 F.setText(FTemperature);
                 K.setText(KTemperature);
                 if (0 > Double.valueOf(KTemperature)) {
+                    temperarureType.setText("Error");
                     clear(C, F, K);
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
@@ -183,8 +182,9 @@ public class ControllerConverter implements Initializable {
                     fadeTransition.setCycleCount(25);
                     fadeTransition.play();
                 }
-
             }
+            Convertion convertion = new Convertion(info, " °C: " + C.getText(), " °F: " + F.getText() + "\n  K: " + K.getText());
+            XMLHandlerControllers.write(convertion);
             addData(C, F, K);
 
         } else if (!F.getText().equals("")) {
@@ -202,6 +202,7 @@ public class ControllerConverter implements Initializable {
                 C.setText(CTemperature);
                 K.setText(KTemperature);
                 if (0 > Double.valueOf(KTemperature)) {
+                    temperarureType.setText("Error");
                     clear(C, F, K);
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
@@ -216,6 +217,7 @@ public class ControllerConverter implements Initializable {
                 C.setText(CTemperature);
                 K.setText(KTemperature);
                 if (0 > Double.valueOf(KTemperature)) {
+                    temperarureType.setText("Error");
                     clear(C, F, K);
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
@@ -223,7 +225,11 @@ public class ControllerConverter implements Initializable {
                     fadeTransition.setCycleCount(25);
                     fadeTransition.play();
                 }
+
             }
+            Convertion convertion = new Convertion(info, " °F: " + F.getText(), " °C: " + C.getText() + "\n  K: " + K.getText());
+            XMLHandlerControllers.write(convertion);
+
             addData(C, F, K);
 
         } else if (!K.getText().equals("")) {
@@ -241,6 +247,7 @@ public class ControllerConverter implements Initializable {
                 F.setText(FTemperature);
                 C.setText(CTemperature);
                 if (0 > Double.valueOf(K.getText())) {
+                    temperarureType.setText("Error");
                     clear(C, F, K);
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
@@ -256,6 +263,7 @@ public class ControllerConverter implements Initializable {
                 F.setText(FTemperature);
                 C.setText(CTemperature);
                 if (0 > Double.valueOf(K.getText())) {
+                    temperarureType.setText("Error");
                     clear(C, F, K);
                     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
                     fadeTransition.setFromValue(1.0);
@@ -263,7 +271,10 @@ public class ControllerConverter implements Initializable {
                     fadeTransition.setCycleCount(25);
                     fadeTransition.play();
                 }
+
             }
+            Convertion convertion = new Convertion(info, "  K: " + K.getText(), " °C: " + C.getText() + "\n °F: " + F.getText());
+            XMLHandlerControllers.write(convertion);
             addData(C, F, K);
 
         }
@@ -289,7 +300,8 @@ public class ControllerConverter implements Initializable {
             if (newBox != null) {
                 switch (newBox) {
                     case "Boiling Point of Water":
-                        temperarureType.setText("Boiling Point of Water");
+                        String info = "Boiling Point of Water";
+                        temperarureType.setText(info);
                         dataV.clear();
                         dataH.clear();
                         C.setText("100");
@@ -311,14 +323,15 @@ public class ControllerConverter implements Initializable {
                             F.setText("212");
 
                         }
-
+                        Convertion convertion = new Convertion(info, "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
+                        XMLHandlerControllers.write(convertion);
                         addData(C, F, K);
                         comboBox.setValue("...");
 
                         break;
                     case "Melting Point of Ice":
-                        temperarureType.setText("Melting Point of Ice");
-
+                        String info1 = "Boiling Point of Water";
+                        temperarureType.setText(info1);
                         dataV.clear();
                         dataH.clear();
                         C.setText("0");
@@ -340,14 +353,15 @@ public class ControllerConverter implements Initializable {
                             F.setText("32");
 
                         }
-
+                        Convertion convertion1 = new Convertion(info1, "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
+                        XMLHandlerControllers.write(convertion1);
                         addData(C, F, K);
                         comboBox.setValue("...");
 
                         break;
                     case "Absolute Zero":
-                        temperarureType.setText("Absolute Zero");
-
+                        String info2 = "Boiling Point of Water";
+                        temperarureType.setText(info2);
                         dataV.clear();
                         dataH.clear();
                         C.setText("-273.15");
@@ -369,14 +383,15 @@ public class ControllerConverter implements Initializable {
                             F.setText("-459.67");
 
                         }
-
+                        Convertion convertion2 = new Convertion(info2, "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
+                        XMLHandlerControllers.write(convertion2);
                         addData(C, F, K);
                         comboBox.setValue("...");
 
                         break;
                     case "Room Temperature":
-                        temperarureType.setText("Room Temperature");
-
+                        String info3 = "Boiling Point of Water";
+                        temperarureType.setText(info3);
                         dataV.clear();
                         dataH.clear();
                         C.setText("22");
@@ -398,13 +413,14 @@ public class ControllerConverter implements Initializable {
                             F.setText("71.6");
 
                         }
-
+                        Convertion convertion3 = new Convertion(info3, "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
+                        XMLHandlerControllers.write(convertion3);
                         addData(C, F, K);
                         comboBox.setValue("...");
                         break;
                     case "Body Temperature":
-                        temperarureType.setText("Body Temperature");
-
+                        String info4 = "Boiling Point of Water";
+                        temperarureType.setText(info4);
                         dataV.clear();
                         dataH.clear();
                         C.setText("37");
@@ -426,7 +442,8 @@ public class ControllerConverter implements Initializable {
                             F.setText("71.6");
 
                         }
-
+                        Convertion convertion4 = new Convertion(info4, "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
+                        XMLHandlerControllers.write(convertion4);
                         addData(C, F, K);
                         comboBox.setValue("...");
                         break;

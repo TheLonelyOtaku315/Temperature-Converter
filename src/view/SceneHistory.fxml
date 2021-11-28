@@ -54,12 +54,13 @@
    <center>
       <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView prefHeight="470.0" prefWidth="695.0" styleClass="secondary-color">
+            <TableView fx:id="table" prefHeight="570.0" prefWidth="732.0" styleClass="secondary-color">
               <columns>
-                <TableColumn prefWidth="129.0" text="Date" />
-                  <TableColumn minWidth="0.0" prefWidth="171.0" text="Information you enter:" />
-                  <TableColumn minWidth="0.0" prefWidth="219.0" text="Information Given to you: " />
-                  <TableColumn minWidth="0.0" prefWidth="175.0" text="Delete" />
+                <TableColumn fx:id="date" prefWidth="92.0" text="Date" />
+                  <TableColumn fx:id="info" prefWidth="142.0" text="Information" />
+                  <TableColumn fx:id="enter" minWidth="0.0" prefWidth="191.0" text="Information you enter:" />
+                  <TableColumn fx:id="given" minWidth="0.0" prefWidth="206.0" text="Information Given to you: " />
+                  <TableColumn fx:id="delete" minWidth="0.0" prefWidth="100.0" text="Delete" />
               </columns>
                <HBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

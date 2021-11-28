@@ -12,9 +12,16 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import javafx.scene.control.DatePicker;
+import javafx.util.StringConverter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import model.Convertion;
 import model.XMLHandler;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,6 +36,12 @@ import view.XMLHandlerView;
  */
 public class XMLHandlerControllers {
 
+    /**
+     *
+     * @param convertion2
+     */
+    
+
     private final XMLHandler xml;
     private final XMLHandlerView xmlView;
 
@@ -36,43 +49,50 @@ public class XMLHandlerControllers {
         this.xml = xml;
         this.xmlView = xmlView;
     }
+    static File xmlFile = new File("history.xml");
 
-    public void write() {
+    public static void write(Convertion convertion) {
         try {
 
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
             Document document = documentBuilder.newDocument();
 
-//            // root element
-//            Element root = document.createElement("Account");
-//            document.appendChild(root);
-//
-//            // firstname element
-//            Element firstName = document.createElement("Name");
-//            firstName.appendChild(document.createTextNode(acc.getName()));
-//            root.appendChild(firstName);
-//
-//            // Bounty element
-//            Element Bounty = document.createElement("Bounty");
-//            Bounty.appendChild(document.createTextNode(acc.getAmount().toString()));
-//            root.appendChild(Bounty);
-//
-//            // path element
-//            Element path = document.createElement("Path");
-//            path.appendChild(document.createTextNode(xml.getXMLFilePath()));
-//            root.appendChild(path);
+            // root element
+            Element root = document.createElement("Converstion");
+            document.appendChild(root);
+
+            // Date element
+            Element firstName = document.createElement("Date");
+            String timeStamp = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss").format(Calendar.getInstance().getTime());
+            firstName.appendChild(document.createTextNode(timeStamp));
+            root.appendChild(firstName);
+
+            // Information element
+            Element info1 = document.createElement("Information");
+            info1.appendChild(document.createTextNode(convertion.getInformation()));
+            root.appendChild(info1);
+
+            // Information enter element
+            Element enter1 = document.createElement("InformationEnter");
+            enter1.appendChild(document.createTextNode(convertion.getInformationEnter()));
+            root.appendChild(enter1);
+            
+            // Information given element
+            Element given1 = document.createElement("InformationGiven");
+            given1.appendChild(document.createTextNode(convertion.getInformationGiven()));
+            root.appendChild(given1);
 
             // create the xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
+            
             DOMSource domSource = new DOMSource(document);
-            StreamResult streamResult = new StreamResult(new File(xml.getXMLFilePath()));
+            StreamResult streamResult = new StreamResult(xmlFile);
 
             transformer.transform(domSource, streamResult);
 
-            String answer = "XML File created:";
-            System.out.println(answer);
+            System.out.println("Done creating XML File");
 
         } catch (ParserConfigurationException | TransformerException pce) {
         }
@@ -90,7 +110,7 @@ public class XMLHandlerControllers {
             System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
             System.out.println("------");
 
-            NodeList list = doc.getElementsByTagName("Account");
+            NodeList list = doc.getElementsByTagName("Converstion");
 
             for (int temp = 0; temp < list.getLength(); temp++) {
 
@@ -100,14 +120,16 @@ public class XMLHandlerControllers {
 
                     Element element = (Element) node;
 
-                    String Name = element.getElementsByTagName("Name").item(0).getTextContent();
-                    String Bounty = element.getElementsByTagName("Bounty").item(0).getTextContent();
-                    String Path = element.getElementsByTagName("Path").item(0).getTextContent();
+                    String Date = element.getElementsByTagName("Name").item(0).getTextContent();
+                    String Information = element.getElementsByTagName("Bounty").item(0).getTextContent();
+                    String InformationEnter = element.getElementsByTagName("Path").item(0).getTextContent();
+                    String InformationGiven = element.getElementsByTagName("Path").item(0).getTextContent();
 
                     String answer = "Current Element :" + node.getNodeName()
-                            + "\nName : " + Name
-                            + "\nBounty : " + Bounty
-                            + "\nPath : " + Path;
+                            + "\nDate : " + Date
+                            + "\nInformation : " + Information
+                            + "\nInformation Enter : " + InformationEnter
+                            + "\nInformation Given : " + InformationGiven;
                     return answer;
                 }
             }

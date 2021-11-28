@@ -5,8 +5,10 @@
  */
 package jfxsample;
 
+import java.io.File;
 import view.introScene;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -16,6 +18,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
 //import view.SceneHistory.fxml;
 
 /**
@@ -65,5 +75,25 @@ public class main extends Application {
         Scene scene1 = new Scene(root);
         stage.setScene(scene1);
         stage.show();
+    }
+
+    private static Document convertXMLFileToXMLDocument(String filePath) {
+        //Parser that produces DOM object trees from XML content
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        //API to obtain DOM Document instance
+        DocumentBuilder builder = null;
+        try {
+            //Create DocumentBuilder with default configuration
+            builder = factory.newDocumentBuilder();
+
+            //Parse the content to Document object
+            Document xmlDocument = builder.parse(new File(filePath));
+
+            return xmlDocument;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
