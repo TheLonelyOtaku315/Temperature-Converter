@@ -6,6 +6,7 @@
 package controllers;
 
 import static controllers.XMLHandlerControllers.xmlFile;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +45,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import model.Convertion;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -127,21 +130,58 @@ public class ControllerHistory implements Initializable {
             private final Button deleteButton = new Button("Delete");
 
             @Override
-            protected void updateItem(Convertion task, boolean empty) {
-                super.updateItem(task, empty);
+            protected void updateItem(Convertion conv, boolean empty) {
+                super.updateItem(conv, empty);
 
-                if (task == null) {
+                if (conv == null) {
                     setGraphic(null);
                     return;
                 }
 
                 setGraphic(deleteButton);
-                deleteButton.setOnAction(event -> getTableView().getItems().remove(task)
-                );
+                deleteButton.setOnAction(event -> {
+                    getTableView().getItems().remove(conv);
+                    try {
+                        deleteBtnHandler(conv);
+                    } catch (ParserConfigurationException ex) {
+                        Logger.getLogger(ControllerHistory.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SAXException ex) {
+                        Logger.getLogger(ControllerHistory.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ControllerHistory.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (TransformerException ex) {
+                        Logger.getLogger(ControllerHistory.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
             }
         });
 
         table.setItems(data);
+    }
+
+    private static void deleteBtnHandler(Convertion conv) throws ParserConfigurationException, SAXException, IOException, TransformerConfigurationException, TransformerException {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+
+        Document doc = db.parse(new File("history.xml"));
+        // <Converstion>
+        NodeList nodes = doc.getElementsByTagName("Converstion");
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Element person = (Element) nodes.item(i);
+            // <name>
+            Element name = (Element) person.getElementsByTagName("Date").item(0);
+            String pName = name.getTextContent();
+            if (pName.equals(conv.getDate())) {
+                person.getParentNode().removeChild(person);
+            }
+        }
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+
+        DOMSource domSource = new DOMSource(doc);
+        StreamResult streamResult = new StreamResult(xmlFile);
+        transformer.transform(domSource, streamResult);
     }
 
     @FXML
@@ -157,9 +197,8 @@ public class ControllerHistory implements Initializable {
             System.err.format("IOException: %s%n", e);
         }
 
-        System.out.println("Done creating XML File");
+        System.out.println("XML File Changed");
 
     }
 
-    
 }

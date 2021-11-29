@@ -183,7 +183,7 @@ public class ControllerConverter implements Initializable {
                     fadeTransition.play();
                 }
             }
-            Convertion convertion = new Convertion(info, " °C: " + C.getText(), " °F: " + F.getText() + "\n  K: " + K.getText());
+            Convertion convertion = new Convertion(temperarureType.getText(), " °C: " + C.getText(), " °F: " + F.getText() + "\n  K: " + K.getText());
             XMLHandlerControllers.write(convertion);
             addData(C, F, K);
 
@@ -227,7 +227,7 @@ public class ControllerConverter implements Initializable {
                 }
 
             }
-            Convertion convertion = new Convertion(info, " °F: " + F.getText(), " °C: " + C.getText() + "\n  K: " + K.getText());
+            Convertion convertion = new Convertion(temperarureType.getText(), " °F: " + F.getText(), " °C: " + C.getText() + "\n  K: " + K.getText());
             XMLHandlerControllers.write(convertion);
 
             addData(C, F, K);
@@ -273,7 +273,7 @@ public class ControllerConverter implements Initializable {
                 }
 
             }
-            Convertion convertion = new Convertion(info, "  K: " + K.getText(), " °C: " + C.getText() + "\n °F: " + F.getText());
+            Convertion convertion = new Convertion(temperarureType.getText(), "  K: " + K.getText(), " °C: " + C.getText() + "\n °F: " + F.getText());
             XMLHandlerControllers.write(convertion);
             addData(C, F, K);
 

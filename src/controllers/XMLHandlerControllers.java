@@ -112,14 +112,6 @@ public class XMLHandlerControllers {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(old);
-            System.out.println("***************************");
-
-            //count number of convertion 
-            System.out.println("***************************");
-            int numberOfConvertion = countOccurrences(old, "K:");
-            System.out.println(numberOfConvertion);
-            System.out.println("***************************");
 
             // change history.xml data
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -144,8 +136,6 @@ public class XMLHandlerControllers {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println(update);
-            System.out.println("***************************");
 
             //Write the xml entirely
             String all = "<data>" + old + update + "</data>";
@@ -158,7 +148,7 @@ public class XMLHandlerControllers {
                 System.err.format("IOException: %s%n", e);
             }
 
-            System.out.println("Done creating XML File");
+            System.out.println("XML File Changed");
 
         } catch (ParserConfigurationException | TransformerException pce) {
         }
@@ -183,10 +173,10 @@ public class XMLHandlerControllers {
 
             doc.getDocumentElement().normalize();
 
-            System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
+            System.err.println("Root Element :" + doc.getDocumentElement().getNodeName());
             System.out.println("------");
 
-            // get <staff>
+            // get <Converstion>
             NodeList list = doc.getElementsByTagName("Converstion");
 
             for (int temp = 0; temp < list.getLength(); temp++) {
@@ -197,7 +187,7 @@ public class XMLHandlerControllers {
 
                     Element element = (Element) node;
 
-                    // get staff's attribute
+                    // get Converstion attribute
                     String id = element.getAttribute("id");
 
                     // get text
@@ -226,55 +216,4 @@ public class XMLHandlerControllers {
 
     }
 
-    private static void addIntTable(ObservableList data, TableView table, TableColumn date, TableColumn info, TableColumn enter, TableColumn given, TableColumn<Convertion, Convertion> delete) {
-        date.setCellValueFactory(
-                new PropertyValueFactory<Convertion, String>("date"));
-
-        info.setCellValueFactory(
-                new PropertyValueFactory<Convertion, String>("information"));
-
-        enter.setCellValueFactory(
-                new PropertyValueFactory<Convertion, String>("informationEnter"));
-
-        given.setCellValueFactory(
-                new PropertyValueFactory<Convertion, String>("informationGiven"));
-
-        delete.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        delete.setCellFactory(param -> new TableCell<Convertion, Convertion>() {
-            private final Button deleteButton = new Button("Delete");
-
-            @Override
-            protected void updateItem(Convertion task, boolean empty) {
-                super.updateItem(task, empty);
-
-                if (task == null) {
-                    setGraphic(null);
-                    return;
-                }
-
-                setGraphic(deleteButton);
-                deleteButton.setOnAction(event -> getTableView().getItems().remove(task)
-                );
-            }
-        });
-
-        table.setItems(data);
-    }
-
-    private static int countOccurrences(String str, String word) {
-        // split the string by spaces in a
-        String a[] = str.split(" ");
-
-        // search for pattern in a
-        int count = 0;
-        for (int i = 0; i < a.length; i++) {
-            // if match found increase count        
-
-            if (word.equals(a[i])) {
-                count++;
-            }
-        }
-
-        return count;
-    }
 }
