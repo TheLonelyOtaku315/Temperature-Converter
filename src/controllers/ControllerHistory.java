@@ -5,8 +5,6 @@
  */
 package controllers;
 
-import static controllers.XMLHandlerControllers.xmlFile;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -19,7 +17,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -27,13 +24,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -112,7 +106,7 @@ public class ControllerHistory implements Initializable {
         stage.show();
     }
 
-    private static void addInfoTable(ObservableList data, TableView table, TableColumn date, TableColumn info, TableColumn enter, TableColumn given, TableColumn<Convertion, Convertion> delete) {
+    private void addInfoTable(ObservableList data, TableView table, TableColumn date, TableColumn info, TableColumn enter, TableColumn given, TableColumn<Convertion, Convertion> delete) {
         date.setCellValueFactory(
                 new PropertyValueFactory<Convertion, String>("date"));
 
@@ -159,7 +153,7 @@ public class ControllerHistory implements Initializable {
         table.setItems(data);
     }
 
-    private static void deleteBtnHandler(Convertion conv) throws ParserConfigurationException, SAXException, IOException, TransformerConfigurationException, TransformerException {
+    private void deleteBtnHandler(Convertion conv) throws ParserConfigurationException, SAXException, IOException, TransformerConfigurationException, TransformerException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
 

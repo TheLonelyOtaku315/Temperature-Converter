@@ -18,7 +18,7 @@
 }
 
 /*Automatic color set*/
-/*.label{
+.label{
     font-size: 15px;
     -fx-text-fill: white;
 
@@ -35,7 +35,7 @@
 .context-menu {
 
     -fx-background-color:#383838;
-}*/
+}
 
 .root { 
     -fx-accent: #1e74c6;

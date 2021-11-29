@@ -63,8 +63,8 @@ public class ControllerConverter implements Initializable {
     private TextField K;
 
 //    private BarChart temperatureChart;
-    private static ObservableList<XYChart.Series<String, Number>> dataV = FXCollections.<XYChart.Series<String, Number>>observableArrayList();
-    private static ObservableList<XYChart.Series<Number, String>> dataH = FXCollections.<XYChart.Series<Number, String>>observableArrayList();
+    private static final ObservableList<XYChart.Series<String, Number>> dataV = FXCollections.<XYChart.Series<String, Number>>observableArrayList();
+    private static final ObservableList<XYChart.Series<Number, String>> dataH = FXCollections.<XYChart.Series<Number, String>>observableArrayList();
     @FXML
     private Label errorMessage;
     @FXML
@@ -139,145 +139,86 @@ public class ControllerConverter implements Initializable {
         stage.show();
     }
 
-    private static void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage, Label temperarureType) {
+    private void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage, Label temperarureType) {
         String info = "User Temperature";
         temperarureType.setText(info);
+        if (isNumeric(C.getText()) || isNumeric(F.getText()) || isNumeric(K.getText())) {
 
-        if (!C.getText().equals("")) {
-            dataV.clear();
-            dataH.clear();
+            if (!C.getText().equals("")) {
+                dataV.clear();
+                dataH.clear();
 
-            decimalRestriction = ControllerSetting.decimalSet;
+                decimalRestriction = ControllerSetting.decimalSet;
+                String FTemperature;
+                String KTemperature;
+                if (decimalRestriction != null) {
+                    DecimalFormat df = new DecimalFormat(decimalRestriction);
 
-            if (decimalRestriction != null) {
-                DecimalFormat df = new DecimalFormat(decimalRestriction);
+                    FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
+                    KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
 
-                String FTemperature = df.format(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
-                String KTemperature = df.format(CelsiusToKelvin(Double.parseDouble(C.getText())));
+                } else {
 
+                    FTemperature = Double.toString(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
+                    KTemperature = Double.toString(CelsiusToKelvin(Double.parseDouble(C.getText())));
+
+                }
                 F.setText(FTemperature);
                 K.setText(KTemperature);
-                if (0 > Double.valueOf(KTemperature)) {
-                    temperarureType.setText("Error");
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
+
+            } else if (!F.getText().equals("")) {
+                dataV.clear();
+                dataH.clear();
+
+                decimalRestriction = ControllerSetting.decimalSet;
+                String CTemperature;
+                String KTemperature;
+                if (decimalRestriction != null) {
+                    DecimalFormat df = new DecimalFormat(decimalRestriction);
+
+                    CTemperature = df.format(FahrenheitToCelsius(Double.parseDouble(F.getText())));
+                    KTemperature = df.format(FahrenheitToKelvin(Double.parseDouble(F.getText())));
+
+                } else {
+                    CTemperature = Double.toString(FahrenheitToCelsius(Double.parseDouble(F.getText())));
+                    KTemperature = Double.toString(FahrenheitToKelvin(Double.parseDouble(F.getText())));
+
                 }
-            } else {
-
-                String FTemperature = Double.toString(CelsiusToFahrenheit(Double.parseDouble(C.getText())));
-                String KTemperature = Double.toString(CelsiusToKelvin(Double.parseDouble(C.getText())));
-
-                F.setText(FTemperature);
+                C.setText(CTemperature);
                 K.setText(KTemperature);
-                if (0 > Double.valueOf(KTemperature)) {
-                    temperarureType.setText("Error");
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
+
+            } else if (!K.getText().equals("")) {
+                dataV.clear();
+                dataH.clear();
+
+                decimalRestriction = ControllerSetting.decimalSet;
+                String CTemperature;
+                String FTemperature;
+                if (decimalRestriction != null) {
+                    DecimalFormat df = new DecimalFormat(decimalRestriction);
+
+                    CTemperature = df.format(KelvinToCelsius(Double.parseDouble(K.getText())));
+                    FTemperature = df.format(KelvinToFahrenheit(Double.parseDouble(K.getText())));
+
+                } else {
+
+                    CTemperature = Double.toString(KelvinToCelsius(Double.parseDouble(K.getText())));
+                    FTemperature = Double.toString(KelvinToFahrenheit(Double.parseDouble(K.getText())));
+
                 }
+                F.setText(FTemperature);
+                C.setText(CTemperature);
             }
-            Convertion convertion = new Convertion(temperarureType.getText(), " °C: " + C.getText(), " °F: " + F.getText() + "\n  K: " + K.getText());
-            XMLHandlerControllers.write(convertion);
-            addData(C, F, K);
-
-        } else if (!F.getText().equals("")) {
-            dataV.clear();
-            dataH.clear();
-
-            decimalRestriction = ControllerSetting.decimalSet;
-
-            if (decimalRestriction != null) {
-                DecimalFormat df = new DecimalFormat(decimalRestriction);
-
-                String CTemperature = df.format(FahrenheitToCelsius(Double.parseDouble(F.getText())));
-                String KTemperature = df.format(FahrenheitToKelvin(Double.parseDouble(F.getText())));
-
-                C.setText(CTemperature);
-                K.setText(KTemperature);
-                if (0 > Double.valueOf(KTemperature)) {
-                    temperarureType.setText("Error");
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
-                }
-            } else {
-                String CTemperature = Double.toString(FahrenheitToCelsius(Double.parseDouble(F.getText())));
-                String KTemperature = Double.toString(FahrenheitToKelvin(Double.parseDouble(F.getText())));
-
-                C.setText(CTemperature);
-                K.setText(KTemperature);
-                if (0 > Double.valueOf(KTemperature)) {
-                    temperarureType.setText("Error");
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
-                }
-
-            }
-            Convertion convertion = new Convertion(temperarureType.getText(), " °F: " + F.getText(), " °C: " + C.getText() + "\n  K: " + K.getText());
-            XMLHandlerControllers.write(convertion);
-
-            addData(C, F, K);
-
-        } else if (!K.getText().equals("")) {
-            dataV.clear();
-            dataH.clear();
-
-            decimalRestriction = ControllerSetting.decimalSet;
-
-            if (decimalRestriction != null) {
-                DecimalFormat df = new DecimalFormat(decimalRestriction);
-
-                String CTemperature = df.format(KelvinToCelsius(Double.parseDouble(K.getText())));
-                String FTemperature = df.format(KelvinToFahrenheit(Double.parseDouble(K.getText())));
-
-                F.setText(FTemperature);
-                C.setText(CTemperature);
-                if (0 > Double.valueOf(K.getText())) {
-                    temperarureType.setText("Error");
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
-                }
-            } else {
-
-                String CTemperature = Double.toString(KelvinToCelsius(Double.parseDouble(K.getText())));
-                String FTemperature = Double.toString(KelvinToFahrenheit(Double.parseDouble(K.getText())));
-
-                F.setText(FTemperature);
-                C.setText(CTemperature);
-                if (0 > Double.valueOf(K.getText())) {
-                    temperarureType.setText("Error");
-                    clear(C, F, K);
-                    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.setCycleCount(25);
-                    fadeTransition.play();
-                }
-
-            }
-            Convertion convertion = new Convertion(temperarureType.getText(), "  K: " + K.getText(), " °C: " + C.getText() + "\n °F: " + F.getText());
-            XMLHandlerControllers.write(convertion);
-            addData(C, F, K);
-
+        } else {
+            errorMessage(temperarureType, C, F, K, errorMessage, "Can't convert Text Temperature");
         }
+        if (0 > Double.valueOf(K.getText())) {
+            errorMessage(temperarureType, C, F, K, errorMessage, "Thre Temperature can't be smaller then 0 K");
+        }
+        Convertion convertion = new Convertion(temperarureType.getText(), "  K: " + K.getText(), " °C: " + C.getText() + "\n °F: " + F.getText());
+        XMLHandlerControllers.write(convertion);
+        addData(C, F, K);
+
     }
 
     @FXML
@@ -474,7 +415,7 @@ public class ControllerConverter implements Initializable {
         K.setText("");
     }
 
-    private static void addData(TextField C, TextField F, TextField K) {
+    private void addData(TextField C, TextField F, TextField K) {
         dataV.clear();
         dataH.clear();
         illustrationRestriction = ControllerSetting.illustrationSet;
@@ -505,6 +446,35 @@ public class ControllerConverter implements Initializable {
         HTemperatureK.getData().add(new XYChart.Data<>(Double.parseDouble(K.getText()), ""));
 
         dataH.addAll(HTemperatureC, HTemperatureF, HTemperatureK);
+
+    }
+
+    private boolean isNumeric(String string) {
+        int intValue;
+
+        System.out.println(String.format("Parsing string: \"%s\"", string));
+
+        if (string == null || string.equals("")) {
+            return false;
+        }
+
+        try {
+            intValue = Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e) {
+        }
+        return false;
+    }
+
+    private void errorMessage(Label temperarureType, TextField C, TextField F, TextField K, Label errorMessage, String message) {
+        temperarureType.setText("Error");
+        clear(C, F, K);
+        errorMessage.setText(message);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.1), errorMessage);
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.setCycleCount(25);
+        fadeTransition.play();
 
     }
 }

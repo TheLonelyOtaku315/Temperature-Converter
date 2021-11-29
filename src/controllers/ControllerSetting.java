@@ -24,9 +24,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import jfxsample.darkLightMode;
-import jfxsample.darkLightMode;
-import jfxsample.darkLightMode;
-import jfxsample.darkLightMode;
 
 /**
  *

@@ -13,38 +13,23 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Scanner;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.StringConverter;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import model.Convertion;
-import model.XMLHandler;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import view.XMLHandlerView;
 
 /**
  *
@@ -56,13 +41,6 @@ public class XMLHandlerControllers {
      *
      * @param convertion2
      */
-    private final XMLHandler xml;
-    private final XMLHandlerView xmlView;
-
-    public XMLHandlerControllers(XMLHandler xml, XMLHandlerView xmlView) {
-        this.xml = xml;
-        this.xmlView = xmlView;
-    }
     static File xmlFile = new File("history.xml");
 
     public static void write(Convertion convertion) {
@@ -180,7 +158,21 @@ public class XMLHandlerControllers {
 
     }
 
-    public static String readXMLAsString(String str) {
+    private static void writeXMLAsString(String all) {
+        try (FileWriter writer = new FileWriter(xmlFile);
+                BufferedWriter bw = new BufferedWriter(writer)) {
+
+            bw.write(all);
+
+        } catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+
+        System.out.println("XML File Changed");
+
+    }
+
+    private static String readXMLAsString(String str) {
         try (BufferedReader reader = new BufferedReader(new FileReader(new File("history.xml")))) {
 
             String line;
@@ -197,17 +189,4 @@ public class XMLHandlerControllers {
         return str;
     }
 
-    public static void writeXMLAsString(String all) {
-        try (FileWriter writer = new FileWriter(xmlFile);
-                BufferedWriter bw = new BufferedWriter(writer)) {
-
-            bw.write(all);
-
-        } catch (IOException e) {
-            System.err.format("IOException: %s%n", e);
-        }
-
-        System.out.println("XML File Changed");
-
-    }
 }

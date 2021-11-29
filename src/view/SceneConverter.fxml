@@ -70,7 +70,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
                <children>
-                  <Label fx:id="temperarureType" style="-fx-text-fill: #000000;" text=" ">
+                  <Label fx:id="temperarureType" styleClass="primary-color" text="User Temperature">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
