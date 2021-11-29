@@ -98,20 +98,9 @@ public class XMLHandlerControllers {
             root.appendChild(given1);
 
             // read history.xml before chnaging data
-            String old = "";
-            try (BufferedReader reader = new BufferedReader(new FileReader(new File("history.xml")))) {
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String replaceAll = line.replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
-                    String replaceAll2 = replaceAll.replace("<data>", "");
-                    String replaceAll3 = replaceAll2.replace("</data>", "");
-                    old = old + replaceAll3;
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String old1 = "";
+            String old = readXMLAsString(old1);
+            System.out.print(old);
 
             // change history.xml data
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -122,42 +111,21 @@ public class XMLHandlerControllers {
             transformer.transform(domSource, streamResult);
 
             // read history.xml new data
-            String update = "";
-            try (BufferedReader reader = new BufferedReader(new FileReader(new File("history.xml")))) {
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String replaceAll = line.replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
-                    String replaceAll3 = replaceAll.replace("<data>", "");
-                    String replaceAll4 = replaceAll3.replace("</data>", "");
-                    update = update + replaceAll4;
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String update1 = "";
+            String update = readXMLAsString(update1);
+            System.out.print(update);
 
             //Write the xml entirely
             String all = "<data>" + old + update + "</data>";
-            try (FileWriter writer = new FileWriter("history.xml");
-                    BufferedWriter bw = new BufferedWriter(writer)) {
-
-                bw.write(all);
-
-            } catch (IOException e) {
-                System.err.format("IOException: %s%n", e);
-            }
-
-            System.out.println("XML File Changed");
+            writeXMLAsString(all);
 
         } catch (ParserConfigurationException | TransformerException pce) {
         }
     }
 
-    public static ObservableList read(TableView table, TableColumn date1, TableColumn info1, TableColumn enter1, TableColumn given1, TableColumn<Convertion, Convertion> delete) {
+    public static ObservableList read() {
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-
         ObservableList<Convertion> data = FXCollections.observableArrayList();
 
         try {
@@ -187,9 +155,6 @@ public class XMLHandlerControllers {
 
                     Element element = (Element) node;
 
-                    // get Converstion attribute
-                    String id = element.getAttribute("id");
-
                     // get text
                     String date = element.getElementsByTagName("Date").item(0).getTextContent();
                     String info = element.getElementsByTagName("Information").item(0).getTextContent();
@@ -197,7 +162,6 @@ public class XMLHandlerControllers {
                     String given = element.getElementsByTagName("InformationGiven").item(0).getTextContent();
 
                     System.out.println("Current Element :" + node.getNodeName());
-                    System.out.println("Id : " + id);
                     System.out.println("Date : " + date);
                     System.out.println("Information : " + info);
                     System.out.println("Information Enter : " + enter);
@@ -216,4 +180,34 @@ public class XMLHandlerControllers {
 
     }
 
+    public static String readXMLAsString(String str) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("history.xml")))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String replaceAll = line.replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "");
+                String replaceAll3 = replaceAll.replace("<data>", "");
+                String replaceAll4 = replaceAll3.replace("</data>", "");
+                str = str + replaceAll4;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public static void writeXMLAsString(String all) {
+        try (FileWriter writer = new FileWriter(xmlFile);
+                BufferedWriter bw = new BufferedWriter(writer)) {
+
+            bw.write(all);
+
+        } catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+
+        System.out.println("XML File Changed");
+
+    }
 }

@@ -78,8 +78,8 @@ public class ControllerHistory implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        list = (XMLHandlerControllers.read(table, given, info, enter, given, delete));
-        addIntTable(list, table, date, info, enter, given, delete);
+        list = (XMLHandlerControllers.read());
+        addInfoTable(list, table, date, info, enter, given, delete);
 
     }
 
@@ -112,7 +112,7 @@ public class ControllerHistory implements Initializable {
         stage.show();
     }
 
-    private static void addIntTable(ObservableList data, TableView table, TableColumn date, TableColumn info, TableColumn enter, TableColumn given, TableColumn<Convertion, Convertion> delete) {
+    private static void addInfoTable(ObservableList data, TableView table, TableColumn date, TableColumn info, TableColumn enter, TableColumn given, TableColumn<Convertion, Convertion> delete) {
         date.setCellValueFactory(
                 new PropertyValueFactory<Convertion, String>("date"));
 
