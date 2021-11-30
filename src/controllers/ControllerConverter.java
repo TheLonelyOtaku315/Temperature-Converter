@@ -62,6 +62,10 @@ public class ControllerConverter implements Initializable {
     @FXML
     private TextField K;
 
+    private static String oldC = "";
+    private static String oldF = "";
+    private static String oldK = "";
+
 //    private BarChart temperatureChart;
     private static final ObservableList<XYChart.Series<String, Number>> dataV = FXCollections.<XYChart.Series<String, Number>>observableArrayList();
     private static final ObservableList<XYChart.Series<Number, String>> dataH = FXCollections.<XYChart.Series<Number, String>>observableArrayList();
@@ -83,9 +87,9 @@ public class ControllerConverter implements Initializable {
 
         comboBoxOption();
 
-        C.setOnMouseClicked(event -> clear(C, F, K));
-        F.setOnMouseClicked(event -> clear(C, F, K));
-        K.setOnMouseClicked(event -> clear(C, F, K));
+        C.setOnMouseClicked(event -> C.clear());
+        F.setOnMouseClicked(event -> F.clear());
+        K.setOnMouseClicked(event -> K.clear());
 
         illustrationRestriction = ControllerSetting.illustrationSet;
         if ("Horizontal".equals(illustrationRestriction)) {
@@ -144,7 +148,7 @@ public class ControllerConverter implements Initializable {
         temperarureType.setText(info);
         if (isNumeric(C.getText()) || isNumeric(F.getText()) || isNumeric(K.getText())) {
 
-            if (!C.getText().equals("")) {
+            if (!C.getText().equals("") && !C.getText().equals(oldC)) {
                 dataV.clear();
                 dataH.clear();
 
@@ -166,7 +170,11 @@ public class ControllerConverter implements Initializable {
                 F.setText(FTemperature);
                 K.setText(KTemperature);
 
-            } else if (!F.getText().equals("")) {
+                oldC = C.getText();
+                oldF = FTemperature;
+                oldK = KTemperature;
+
+            } else if (!F.getText().equals("") && !F.getText().equals(oldF)) {
                 dataV.clear();
                 dataH.clear();
 
@@ -187,7 +195,11 @@ public class ControllerConverter implements Initializable {
                 C.setText(CTemperature);
                 K.setText(KTemperature);
 
-            } else if (!K.getText().equals("")) {
+                oldC = CTemperature;
+                oldF = F.getText();
+                oldK = KTemperature;
+
+            } else if (!K.getText().equals("") && !K.getText().equals(oldK)) {
                 dataV.clear();
                 dataH.clear();
 
@@ -208,6 +220,10 @@ public class ControllerConverter implements Initializable {
                 }
                 F.setText(FTemperature);
                 C.setText(CTemperature);
+
+                oldC = CTemperature;
+                oldF = FTemperature;
+                oldK = K.getText();
             }
         } else {
             errorMessage(temperarureType, C, F, K, errorMessage, "Can't convert Text Temperature");
@@ -267,7 +283,6 @@ public class ControllerConverter implements Initializable {
                         Convertion convertion = new Convertion(info, "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
                         XMLHandlerControllers.write(convertion);
                         addData(C, F, K);
-                        comboBox.setValue("...");
 
                         break;
                     case "Melting Point of Ice":
@@ -297,7 +312,6 @@ public class ControllerConverter implements Initializable {
                         Convertion convertion1 = new Convertion(info1, "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
                         XMLHandlerControllers.write(convertion1);
                         addData(C, F, K);
-                        comboBox.setValue("...");
 
                         break;
                     case "Absolute Zero":
@@ -327,7 +341,6 @@ public class ControllerConverter implements Initializable {
                         Convertion convertion2 = new Convertion(info2, "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
                         XMLHandlerControllers.write(convertion2);
                         addData(C, F, K);
-                        comboBox.setValue("...");
 
                         break;
                     case "Room Temperature":
@@ -357,7 +370,6 @@ public class ControllerConverter implements Initializable {
                         Convertion convertion3 = new Convertion(info3, "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
                         XMLHandlerControllers.write(convertion3);
                         addData(C, F, K);
-                        comboBox.setValue("...");
                         break;
                     case "Body Temperature":
                         String info4 = "Body Temperature";
@@ -386,14 +398,12 @@ public class ControllerConverter implements Initializable {
                         Convertion convertion4 = new Convertion(info4, "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
                         XMLHandlerControllers.write(convertion4);
                         addData(C, F, K);
-                        comboBox.setValue("...");
                         break;
                 }
             }
         });
 
-        comboBox.setOnMouseClicked(event -> clear(C, F, K));
-
+//        comboBox.setOnMouseClicked(event -> clear(C, F, K));
     }
 
     @FXML
@@ -421,29 +431,29 @@ public class ControllerConverter implements Initializable {
         illustrationRestriction = ControllerSetting.illustrationSet;
         XYChart.Series<String, Number> VTemperatureC = new XYChart.Series<>();
         VTemperatureC.setName("°C");
-        VTemperatureC.getData().add(new XYChart.Data<>("", Double.parseDouble(C.getText())));
+        VTemperatureC.getData().add(new XYChart.Data<>("", Double.parseDouble("".equals(C.getText()) ? "0" : C.getText())));
 
         XYChart.Series<String, Number> VTemperatureF = new XYChart.Series<>();
         VTemperatureF.setName("°F");
-        VTemperatureF.getData().add(new XYChart.Data<>("", Double.parseDouble(F.getText())));
+        VTemperatureF.getData().add(new XYChart.Data<>("", Double.parseDouble("".equals(F.getText()) ? "0" : F.getText())));
 
         XYChart.Series<String, Number> VTemperatureK = new XYChart.Series<>();
         VTemperatureK.setName(" K");
-        VTemperatureK.getData().add(new XYChart.Data<>("", Double.parseDouble(K.getText())));
+        VTemperatureK.getData().add(new XYChart.Data<>("", Double.parseDouble("".equals(K.getText()) ? "0" : K.getText())));
 
         dataV.addAll(VTemperatureC, VTemperatureF, VTemperatureK);
 
         XYChart.Series< Number, String> HTemperatureC = new XYChart.Series<>();
         HTemperatureC.setName("°C");
-        HTemperatureC.getData().add(new XYChart.Data<>(Double.parseDouble(C.getText()), ""));
+        HTemperatureC.getData().add(new XYChart.Data<>(Double.parseDouble("".equals(C.getText()) ? "0" : C.getText()), ""));
 
         XYChart.Series<Number, String> HTemperatureF = new XYChart.Series<>();
         HTemperatureF.setName("°F");
-        HTemperatureF.getData().add(new XYChart.Data<>(Double.parseDouble(F.getText()), ""));
+        HTemperatureF.getData().add(new XYChart.Data<>(Double.parseDouble("".equals(F.getText()) ? "0" : F.getText()), ""));
 
         XYChart.Series< Number, String> HTemperatureK = new XYChart.Series<>();
         HTemperatureK.setName(" K");
-        HTemperatureK.getData().add(new XYChart.Data<>(Double.parseDouble(K.getText()), ""));
+        HTemperatureK.getData().add(new XYChart.Data<>(Double.parseDouble("".equals(K.getText()) ? "0" : K.getText()), ""));
 
         dataH.addAll(HTemperatureC, HTemperatureF, HTemperatureK);
 

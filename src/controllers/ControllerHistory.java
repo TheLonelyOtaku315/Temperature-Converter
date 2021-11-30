@@ -27,7 +27,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.scene.control.TextField;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -53,9 +57,11 @@ public class ControllerHistory implements Initializable {
     private Scene scene;
 
     @FXML
+    TextField searchtext;
+    @FXML
     private BorderPane history;
     @FXML
-    private TableView<?> table;
+    private TableView<Convertion> table;
     @FXML
     private TableColumn date;
     @FXML
@@ -68,12 +74,14 @@ public class ControllerHistory implements Initializable {
     private TableColumn<Convertion, Convertion> delete;
 
     private static File xmlFile = new File("history.xml");
-    private static ObservableList list;
+    private static ObservableList<Convertion> list = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         list = (XMLHandlerControllers.read());
         addInfoTable(list, table, date, info, enter, given, delete);
+
+        search(searchtext, table);
 
     }
 
@@ -193,6 +201,42 @@ public class ControllerHistory implements Initializable {
 
         System.out.println("XML File Changed");
 
+    }
+
+    private static void search(TextField searchtext, TableView table) {
+        String text = searchtext.getText();
+        ObservableList temp;
+
+        FilteredList<Convertion> filteredData = new FilteredList<>(list, b -> true);
+
+        searchtext.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(employee -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (String.valueOf(employee.getDate()).contains(lowerCaseFilter)) {
+                    return true;
+                } else if (-1 != employee.getInformation().toLowerCase().indexOf(lowerCaseFilter)) {
+                    return true;
+                } else if (employee.getInformationGiven().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (employee.getInformationEnter().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        SortedList<Convertion> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(table.comparatorProperty());
+
+        table.setItems(sortedData);
     }
 
 }

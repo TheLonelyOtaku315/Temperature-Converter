@@ -10,14 +10,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -33,8 +40,38 @@ public class introScene {
 
     public introScene(Button btn) {
 
+        BorderPane bp = new BorderPane();
+
+        VBox vb = new VBox();
+//Title
+        Label Title = new Label("Temperature Converter (About)");
+        Title.setPadding(new Insets(15, 15, 15,15)); //top, right, bottom, left
+        Title.setStyle("primary-color");
+//MenuBar
+        MenuBar mb = new MenuBar();
+        Menu Converter = new Menu("Converter");
+        Menu Setting = new Menu("Setting");
+        Menu History = new Menu("History");
+        Menu About = new Menu("About");
+
+        MenuItem Converter1 = new MenuItem("Converter");
+        MenuItem Setting1 = new MenuItem("Setting");
+        MenuItem History1 = new MenuItem("History");
+        MenuItem About1 = new MenuItem("About");
+
+        Converter.getItems().add(Converter1);
+        Setting.getItems().add(Setting1);
+        History.getItems().add(History1);
+        About.getItems().add(About1);
+
+        mb.getMenus().addAll(Converter, Setting, History, About);
+
+        vb.getChildren().addAll(Title, mb);
+
+        bp.setTop(vb);
+
         GridPane grid = new GridPane();
-        scene = new Scene(grid, 1000, 700);
+        scene = new Scene(bp, 1000, 700);
 
         Text txt = new Text();
         txt.setText("Wecome to the main page\n"
@@ -64,6 +101,7 @@ public class introScene {
 
         grid.add(imgV, 1, 0);
         GridPane.setHalignment(btn, HPos.CENTER);
+        bp.setCenter(grid);
 
     }
 
@@ -74,11 +112,11 @@ public class introScene {
     public void setScene(Scene scene) {
         this.scene = scene;
     }
-
-    private void btnHandler(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("setting.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+//
+//    private void switchToSetting(Stage stage) throws IOException {
+//        Parent root = FXMLLoader.load(getClass().getResource("setting.fxml"));
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//    }
 }
