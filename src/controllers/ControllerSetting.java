@@ -33,7 +33,7 @@ public class ControllerSetting implements Initializable {
 
     private Stage stage;
     private Scene scene;
-     static String decimalSet;
+    static String decimalSet;
     static String illustrationSet;
 
     @FXML
@@ -144,6 +144,19 @@ public class ControllerSetting implements Initializable {
     }
 
     @FXML
+    public void switchToHelp(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SceneHelp.fxml"));
+        String css = setting.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
+        root.getStylesheets().clear();
+        root.getStylesheets().add(css);
+
+        stage = (Stage) setting.getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
     private void switchToConverter(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/SceneConverter.fxml"));
 
@@ -198,6 +211,7 @@ public class ControllerSetting implements Initializable {
             blinkThenFade.play();
         }
     }
+
     @FXML
     public void getGraphIllustration() {
         System.out.println(illustrationSwitch.getValue());

@@ -49,6 +49,11 @@
                         <MenuItem mnemonicParsing="false" onAction="#switchToHistory" text="History" />
                      </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#switchToHelp" text="About" />
+                     </items>
+                  </Menu>
               </menus>
             </MenuBar>
          </children>

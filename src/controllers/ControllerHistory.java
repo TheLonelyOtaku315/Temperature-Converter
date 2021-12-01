@@ -113,6 +113,19 @@ public class ControllerHistory implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    
+    @FXML
+    public void switchToHelp(ActionEvent event) throws IOException {
+       Parent root = FXMLLoader.load(getClass().getResource("/view/SceneHelp.fxml"));
+        String css = history.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
+        root.getStylesheets().clear();
+        root.getStylesheets().add(css);
+
+        stage = (Stage) history.getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     private void addInfoTable(ObservableList data, TableView table, TableColumn date, TableColumn info, TableColumn enter, TableColumn given, TableColumn<Convertion, Convertion> delete) {
         date.setCellValueFactory(

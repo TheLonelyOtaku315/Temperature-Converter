@@ -127,6 +127,27 @@ public class ControllerConverter implements Initializable {
         stage.show();
     }
 
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
+    @FXML
+    public void switchToHelp(ActionEvent event) throws IOException {
+        dataV.clear();
+        dataH.clear();
+
+       Parent root = FXMLLoader.load(getClass().getResource("/view/SceneHelp.fxml"));
+        String css = converter.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
+        root.getStylesheets().clear();
+        root.getStylesheets().add(css);
+
+        stage = (Stage) converter.getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     @FXML
     public void switchToHistory(ActionEvent event) throws IOException {
         dataV.clear();
@@ -142,6 +163,7 @@ public class ControllerConverter implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+       
 
     private void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage, Label temperarureType) {
         String info = "User Temperature";

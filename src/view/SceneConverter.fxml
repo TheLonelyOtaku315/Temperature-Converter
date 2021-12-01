@@ -48,6 +48,11 @@
                                 <MenuItem mnemonicParsing="false" onAction="#switchToHistory" text="History" />
                             </items>
                         </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#switchToHelp" text="About" />
+                     </items>
+                  </Menu>
                     </menus>
                 </MenuBar>
             </children>
@@ -119,7 +124,7 @@
                                       <Font size="15.0" />
                                   </font>
                               </Button>
-                              <ComboBox fx:id="comboBox" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="comboBox" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <Label text="Key Temperature : " GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="14.0" />
