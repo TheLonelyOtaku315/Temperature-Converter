@@ -139,12 +139,12 @@ public class XMLHandlerControllers {
                     String enter = element.getElementsByTagName("InformationEnter").item(0).getTextContent();
                     String given = element.getElementsByTagName("InformationGiven").item(0).getTextContent();
 
-                    System.out.println("Current Element :" + node.getNodeName());
-                    System.out.println("Date : " + date);
-                    System.out.println("Information : " + info);
-                    System.out.println("Information Enter : " + enter);
-                    System.out.println("Information Given" + given);
-                    System.out.println();
+//                    System.out.println("Current Element :" + node.getNodeName());
+//                    System.out.println("Date : " + date);
+//                    System.out.println("Information : " + info);
+//                    System.out.println("Information Enter : " + enter);
+//                    System.out.println("Information Given" + given);
+//                    System.out.println();
 
                     Convertion convertion = new Convertion(date, info, enter, given);
                     data.add(convertion);

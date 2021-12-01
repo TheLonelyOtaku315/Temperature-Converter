@@ -66,7 +66,6 @@ public class ControllerConverter implements Initializable {
     private static String oldF = "";
     private static String oldK = "";
 
-//    private BarChart temperatureChart;
     private static final ObservableList<XYChart.Series<String, Number>> dataV = FXCollections.<XYChart.Series<String, Number>>observableArrayList();
     private static final ObservableList<XYChart.Series<Number, String>> dataH = FXCollections.<XYChart.Series<Number, String>>observableArrayList();
     @FXML

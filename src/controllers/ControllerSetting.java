@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import jfxsample.darkLightMode;
+import model.Convertion;
 
 /**
  *
@@ -61,8 +64,12 @@ public class ControllerSetting implements Initializable {
     @FXML
     private Label illustrationSave;
 
+
+    public static ObservableList<Convertion> list = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        list = (XMLHandlerControllers.read());
 
         FadeTransition fader1 = new FadeTransition(Duration.seconds(0.1), languageSave);
         fader1.setToValue(0);
@@ -95,7 +102,11 @@ public class ControllerSetting implements Initializable {
         illustrationSwitch.getItems().addAll("Vertical Graph", "Horizontal Graph");
 
         languageSwitch.getItems().removeAll(languageSwitch.getItems());
-        languageSwitch.getItems().addAll("English", "French"/*, "Spanish", "Mandarin"*/);
+        int size = list.size();
+
+        for (int i = 0; i < size; i++) {
+            languageSwitch.getItems().addAll(Integer.toString(i + 1));
+        }
     }
 
     @FXML
@@ -226,7 +237,7 @@ public class ControllerSetting implements Initializable {
                     "Vertical";
             };
 
-            FadeTransition fader1 = createFader1(illustrationSave);
+            FadeTransition fader1 = createFader1(languageSwitch);
             FadeTransition fader2 = createFader2(illustrationSave);
 
             SequentialTransition blinkThenFade = new SequentialTransition(
@@ -236,6 +247,22 @@ public class ControllerSetting implements Initializable {
 
             blinkThenFade.play();
         }
+    }
+
+    @FXML
+    public void getHistoryListSize() {
+        
+        ControllerHistory.setHistoryListSize(Integer.valueOf(languageSwitch.getValue()));
+
+        FadeTransition fader1 = createFader1(languageSave);
+        FadeTransition fader2 = createFader2(languageSave);
+
+        SequentialTransition blinkThenFade = new SequentialTransition(
+                fader1,
+                fader2
+        );
+
+        blinkThenFade.play();
     }
 
     private FadeTransition createFader1(Node node) {

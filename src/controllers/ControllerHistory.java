@@ -74,15 +74,30 @@ public class ControllerHistory implements Initializable {
     private TableColumn<Convertion, Convertion> delete;
 
     private static File xmlFile = new File("history.xml");
-    private static ObservableList<Convertion> list = FXCollections.observableArrayList();
+
+    public static ObservableList<Convertion> list = FXCollections.observableArrayList();
+    public static ObservableList<Convertion> historyList = FXCollections.observableArrayList();
+
+    private static int historyListSize = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         list = (XMLHandlerControllers.read());
-        addInfoTable(list, table, date, info, enter, given, delete);
+        historyList.clear();
+        if (historyListSize == 0) {
+            addInfoTable(list, table, date, info, enter, given, delete);
+            search(list, searchtext, table);
+        } else {
+            for (int i = 0; i < historyListSize; i++) {
+                historyList.add(list.get(i));
+            }
+            addInfoTable(historyList, table, date, info, enter, given, delete);
+            search(historyList, searchtext, table);
+        }
+    }
 
-        search(searchtext, table);
-
+    public static void setHistoryListSize(int historyListSize) {
+        ControllerHistory.historyListSize = historyListSize;
     }
 
     @FXML
@@ -113,10 +128,10 @@ public class ControllerHistory implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     @FXML
     public void switchToHelp(ActionEvent event) throws IOException {
-       Parent root = FXMLLoader.load(getClass().getResource("/view/SceneHelp.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SceneHelp.fxml"));
         String css = history.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
         root.getStylesheets().clear();
         root.getStylesheets().add(css);
@@ -202,6 +217,7 @@ public class ControllerHistory implements Initializable {
     @FXML
     private void clearHistory(ActionEvent event) {
         list.clear();
+        historyList.clear();
 
         try (FileWriter writer = new FileWriter("history.xml");
                 BufferedWriter bw = new BufferedWriter(writer)) {
@@ -216,7 +232,7 @@ public class ControllerHistory implements Initializable {
 
     }
 
-    private static void search(TextField searchtext, TableView table) {
+    private static void search(ObservableList list, TextField searchtext, TableView table) {
         String text = searchtext.getText();
         ObservableList temp;
 

@@ -130,13 +130,13 @@
                         <Image url="@../img/moon.png" />
                      </image>
                   </ImageView>
-                  <Label text="Language : " GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label text="History Item: " GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <ComboBox fx:id="languageSwitch" prefWidth="150.0" styleClass="secondary-color" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button mnemonicParsing="false" styleClass="secondary-color" text="Save" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button mnemonicParsing="false" onAction="#getHistoryListSize" styleClass="secondary-color" text="Save" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
