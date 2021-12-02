@@ -136,7 +136,7 @@ public class ControllerConverter implements Initializable {
         dataV.clear();
         dataH.clear();
 
-       Parent root = FXMLLoader.load(getClass().getResource("/view/SceneHelp.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SceneHelp.fxml"));
         String css = converter.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
         root.getStylesheets().clear();
         root.getStylesheets().add(css);
@@ -162,7 +162,6 @@ public class ControllerConverter implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-       
 
     private void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage, Label temperarureType) {
         String info = "User Temperature";
@@ -194,7 +193,9 @@ public class ControllerConverter implements Initializable {
                 oldC = C.getText();
                 oldF = FTemperature;
                 oldK = KTemperature;
-
+                Convertion convertion = new Convertion(temperarureType.getText(), " °C: " + C.getText(), "  K: " + K.getText() + "\n °F: " + F.getText());
+                XMLHandlerControllers.write(convertion);
+                addData(C, F, K);
             } else if (!F.getText().equals("") && !F.getText().equals(oldF)) {
                 dataV.clear();
                 dataH.clear();
@@ -219,6 +220,9 @@ public class ControllerConverter implements Initializable {
                 oldC = CTemperature;
                 oldF = F.getText();
                 oldK = KTemperature;
+                Convertion convertion = new Convertion(temperarureType.getText(), " °F: " + F.getText(), " °C: " + C.getText() + "\n  K: " + K.getText());
+                XMLHandlerControllers.write(convertion);
+                addData(C, F, K);
 
             } else if (!K.getText().equals("") && !K.getText().equals(oldK)) {
                 dataV.clear();
@@ -245,6 +249,9 @@ public class ControllerConverter implements Initializable {
                 oldC = CTemperature;
                 oldF = FTemperature;
                 oldK = K.getText();
+                Convertion convertion = new Convertion(temperarureType.getText(), "  K: " + K.getText(), " °C: " + C.getText() + "\n °F: " + F.getText());
+                XMLHandlerControllers.write(convertion);
+                addData(C, F, K);
             }
         } else {
             errorMessage(temperarureType, C, F, K, errorMessage, "Can't convert Text Temperature");
@@ -252,9 +259,6 @@ public class ControllerConverter implements Initializable {
         if (0 > Double.valueOf(K.getText())) {
             errorMessage(temperarureType, C, F, K, errorMessage, "Thre Temperature can't be smaller then 0 K");
         }
-        Convertion convertion = new Convertion(temperarureType.getText(), "  K: " + K.getText(), " °C: " + C.getText() + "\n °F: " + F.getText());
-        XMLHandlerControllers.write(convertion);
-        addData(C, F, K);
 
     }
 

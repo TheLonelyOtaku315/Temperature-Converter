@@ -25,6 +25,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -82,14 +84,18 @@ public class ControllerHistory implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        list = (XMLHandlerControllers.read());
+        list = XMLHandlerControllers.read();
+        Collections.reverse(list);
         historyList.clear();
         if (historyListSize == 0) {
             addInfoTable(list, table, date, info, enter, given, delete);
             search(list, searchtext, table);
         } else {
             for (int i = 0; i < historyListSize; i++) {
+                System.out.println(list.size() - i);
                 historyList.add(list.get(i));
+                System.out.println(list.get(i));
+
             }
             addInfoTable(historyList, table, date, info, enter, given, delete);
             search(historyList, searchtext, table);
