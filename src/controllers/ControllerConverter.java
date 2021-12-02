@@ -485,7 +485,7 @@ public class ControllerConverter implements Initializable {
     }
 
     private boolean isNumeric(String string) {
-        int intValue;
+        double intValue;
 
         System.out.println(String.format("Parsing string: \"%s\"", string));
 
@@ -494,7 +494,7 @@ public class ControllerConverter implements Initializable {
         }
 
         try {
-            intValue = Integer.parseInt(string);
+            intValue = Double.valueOf(string);
             return true;
         } catch (NumberFormatException e) {
         }
