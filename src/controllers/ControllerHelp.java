@@ -17,9 +17,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -40,6 +42,8 @@ public class ControllerHelp implements Initializable {
     private BorderPane help;
     @FXML
     private ImageView img;
+    @FXML
+    private HBox btnBox;
 
     @FXML
     public void switchToSetting() throws IOException {
@@ -91,41 +95,48 @@ public class ControllerHelp implements Initializable {
     }
 
     @FXML
-    private void nextBtnHandler() {
-        FadeTransition fader1 = createFader2(img);
-        fader1.play();
-        
+    private void nextBtnHandler() throws IOException {
+
         String url = img.getImage().getUrl();
         String imgID = url.replaceAll("[^0-9]", "");
+        if (!"11".equals(imgID)) {
+            FadeTransition fader1 = createFader2(img);
+            fader1.play();
 
-        int imgNewID = Integer.valueOf(imgID) + 1;
+            int imgNewID = Integer.valueOf(imgID) + 1;
 
-        Image image = new Image("img/" + imgNewID + ".png");
-        img.setImage(image);
+            Image image = new Image("img/" + imgNewID + ".png");
+            img.setImage(image);
 
-        FadeTransition fader2 = createFader1(img);
-        fader2.play();
+            FadeTransition fader2 = createFader1(img);
+            fader2.play();
+        } else {
+            switchToConverter();
+        }
     }
 
     @FXML
     private void previousBtnHandler() {
-        FadeTransition fader1 = createFader2(img);
-        fader1.play();
-        
+
         String url = img.getImage().getUrl();
         String imgID = url.replaceAll("[^0-9]", "");
+        System.out.println(imgID);
+        if (!"1".equals(imgID)) {
+            FadeTransition fader1 = createFader2(img);
+            fader1.play();
 
-        int imgNewID = Integer.valueOf(imgID) - 1;
+            int imgNewID = Integer.valueOf(imgID) - 1;
 
-        Image image = new Image("img/" + imgNewID + ".png");
-        img.setImage(image);
+            Image image = new Image("img/" + imgNewID + ".png");
+            img.setImage(image);
 
-        FadeTransition fader2 = createFader1(img);
-        fader2.play();
+            FadeTransition fader2 = createFader1(img);
+            fader2.play();
+        }
     }
 
     private FadeTransition createFader1(Node node) {
-        FadeTransition fade = new FadeTransition(Duration.seconds(5), node);
+        FadeTransition fade = new FadeTransition(Duration.seconds(1), node);
         fade.setFromValue(0);
         fade.setToValue(1);
 
@@ -133,7 +144,7 @@ public class ControllerHelp implements Initializable {
     }
 
     private FadeTransition createFader2(Node node) {
-        FadeTransition fade = new FadeTransition(Duration.seconds(5), node);
+        FadeTransition fade = new FadeTransition(Duration.seconds(1), node);
         fade.setFromValue(1);
         fade.setToValue(0);
 
