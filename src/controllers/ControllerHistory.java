@@ -176,7 +176,7 @@ public class ControllerHistory implements Initializable {
 
                 setGraphic(deleteButton);
                 deleteButton.setOnAction(event -> {
-                    getTableView().getItems().remove(conv);
+                    data.remove(conv);
                     try {
                         deleteBtnHandler(conv);
                     } catch (ParserConfigurationException ex) {
