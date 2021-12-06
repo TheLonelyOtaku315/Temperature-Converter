@@ -15,18 +15,16 @@ import javafx.scene.layout.BorderPane;
  */
 public class darkLightMode {
 
-    public void setDarkMode(BorderPane parent, ImageView img, String number) {
+    public void setDarkMode(BorderPane parent, String number) {
         parent.getStylesheets().clear();
         parent.getStylesheets().add("styles/light" + number + ".css");
         Image image = new Image("img/moon.png");
-        img.setImage(image);
     }
 
-    public void setLightMode(BorderPane parent, ImageView img, String number) {
+    public void setLightMode(BorderPane parent, String number) {
         parent.getStylesheets().clear();
         parent.getStylesheets().add("styles/dark" + number + ".css");
         Image image = new Image("img/sun.png");
-        img.setImage(image);
     }
 
 }

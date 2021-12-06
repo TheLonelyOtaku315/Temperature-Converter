@@ -43,11 +43,7 @@ public class ControllerSetting implements Initializable {
     @FXML
     private BorderPane setting;
     @FXML
-    private ImageView img;
-    @FXML
     public BorderPane exemple;
-    @FXML
-    private ImageView img1;
     @FXML
     private ComboBox<String> modeSwitch;
     @FXML
@@ -64,7 +60,6 @@ public class ControllerSetting implements Initializable {
     private Label decimalSave;
     @FXML
     private Label illustrationSave;
-
 
     public static ObservableList<Convertion> list = FXCollections.observableArrayList();
 
@@ -112,14 +107,14 @@ public class ControllerSetting implements Initializable {
 
     @FXML
     private void previewChangeMode(ActionEvent event) {
-        changeMode(exemple, img1, "_1");
+        changeMode(exemple, "_1");
 
     }
 
     @FXML
     private void AllChangeMode(ActionEvent event) {
-        changeMode(exemple, img1, "_1");
-        changeMode(setting, img, "");
+        changeMode(exemple, "_1");
+        changeMode(setting, "");
         FadeTransition fader1 = createFader1(modeSave);
         FadeTransition fader2 = createFader2(modeSave);
 
@@ -132,12 +127,12 @@ public class ControllerSetting implements Initializable {
 
     }
 
-    private void changeMode(BorderPane parent, ImageView img, String number) {
+    private void changeMode(BorderPane parent, String number) {
         darkLightMode dlm = new darkLightMode();
         if (!modeSwitch.getValue().equals("Light Mode")) {
-            dlm.setLightMode(parent, img, number);
+            dlm.setLightMode(parent, number);
         } else if (!modeSwitch.getValue().equals("Dark Mode")) {
-            dlm.setDarkMode(parent, img, number);
+            dlm.setDarkMode(parent, number);
         }
     }
 
@@ -252,7 +247,7 @@ public class ControllerSetting implements Initializable {
 
     @FXML
     public void getHistoryListSize() {
-        
+
         ControllerHistory.setHistoryListSize(Integer.valueOf(languageSwitch.getValue()));
 
         FadeTransition fader1 = createFader1(languageSave);

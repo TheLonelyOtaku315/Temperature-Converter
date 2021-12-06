@@ -7,8 +7,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -125,11 +123,6 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <ImageView fx:id="img" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/moon.png" />
-                     </image>
-                  </ImageView>
                   <Label text="History Item: " GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font size="18.0" />
@@ -245,11 +238,6 @@
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                                        <children>
                                           <ComboBox prefWidth="150.0" styleClass="secondary-color" />
-                                          <ImageView fx:id="img1" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../img/moon.png" />
-                                             </image>
-                                          </ImageView>
                                        </children>
                                     </HBox>
                                  </children>

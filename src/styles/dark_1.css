@@ -19,7 +19,7 @@
 
 /*Automatic color set*/
 .label{
-
+    font-size: 15px;
     -fx-text-fill: white;
 
 }
@@ -36,8 +36,6 @@
 
     -fx-background-color:#383838;
 }
-
-
 
 .root { 
     -fx-accent: #1e74c6;
@@ -109,3 +107,5 @@
     -fx-border-color: transparent;
     -fx-table-cell-border-color:transparent;
 }
+
+

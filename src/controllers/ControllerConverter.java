@@ -126,11 +126,6 @@ public class ControllerConverter implements Initializable {
         stage.show();
     }
 
-    /**
-     *
-     * @param event
-     * @throws IOException
-     */
     @FXML
     public void switchToHelp(ActionEvent event) throws IOException {
         dataV.clear();
@@ -456,29 +451,29 @@ public class ControllerConverter implements Initializable {
         illustrationRestriction = ControllerSetting.illustrationSet;
         XYChart.Series<String, Number> VTemperatureC = new XYChart.Series<>();
         VTemperatureC.setName("°C");
-        VTemperatureC.getData().add(new XYChart.Data<>("", Double.parseDouble("".equals(C.getText()) ? "0" : C.getText())));
+        VTemperatureC.getData().add(new XYChart.Data<>("°C", Double.parseDouble("".equals(C.getText()) ? "0" : C.getText())));
 
         XYChart.Series<String, Number> VTemperatureF = new XYChart.Series<>();
         VTemperatureF.setName("°F");
-        VTemperatureF.getData().add(new XYChart.Data<>("", Double.parseDouble("".equals(F.getText()) ? "0" : F.getText())));
+        VTemperatureF.getData().add(new XYChart.Data<>("°F", Double.parseDouble("".equals(F.getText()) ? "0" : F.getText())));
 
         XYChart.Series<String, Number> VTemperatureK = new XYChart.Series<>();
         VTemperatureK.setName(" K");
-        VTemperatureK.getData().add(new XYChart.Data<>("", Double.parseDouble("".equals(K.getText()) ? "0" : K.getText())));
+        VTemperatureK.getData().add(new XYChart.Data<>(" K", Double.parseDouble("".equals(K.getText()) ? "0" : K.getText())));
 
         dataV.addAll(VTemperatureC, VTemperatureF, VTemperatureK);
 
         XYChart.Series< Number, String> HTemperatureC = new XYChart.Series<>();
         HTemperatureC.setName("°C");
-        HTemperatureC.getData().add(new XYChart.Data<>(Double.parseDouble("".equals(C.getText()) ? "0" : C.getText()), ""));
+        HTemperatureC.getData().add(new XYChart.Data<>(Double.parseDouble("".equals(C.getText()) ? "0" : C.getText()), "°C"));
 
         XYChart.Series<Number, String> HTemperatureF = new XYChart.Series<>();
         HTemperatureF.setName("°F");
-        HTemperatureF.getData().add(new XYChart.Data<>(Double.parseDouble("".equals(F.getText()) ? "0" : F.getText()), ""));
+        HTemperatureF.getData().add(new XYChart.Data<>(Double.parseDouble("".equals(F.getText()) ? "0" : F.getText()), "°F"));
 
         XYChart.Series< Number, String> HTemperatureK = new XYChart.Series<>();
         HTemperatureK.setName(" K");
-        HTemperatureK.getData().add(new XYChart.Data<>(Double.parseDouble("".equals(K.getText()) ? "0" : K.getText()), ""));
+        HTemperatureK.getData().add(new XYChart.Data<>(Double.parseDouble("".equals(K.getText()) ? "0" : K.getText()), " K"));
 
         dataH.addAll(HTemperatureC, HTemperatureF, HTemperatureK);
 

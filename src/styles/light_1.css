@@ -7,7 +7,7 @@
 
     -fx-background-color:#E7E7E7;
 }
-.exemple{
+.pane{
     -fx-border-color: gray;
     -fx-background-color:#FFFFFF;
 }
@@ -23,12 +23,4 @@
 
     -fx-text-fill: black;
 
-}
-
-.context-menu {
-
-    -fx-background-color:#FFFFFF;
-}
-.chart-bar {
-    -fx-bar-fill: blue; 
 }

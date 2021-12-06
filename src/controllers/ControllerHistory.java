@@ -199,13 +199,11 @@ public class ControllerHistory implements Initializable {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
 
-        Document doc = db.parse(new File("history.xml"));
-        // <Converstion>
+        Document doc = db.parse(xmlFile);
         NodeList nodes = doc.getElementsByTagName("Converstion");
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Element person = (Element) nodes.item(i);
-            // <name>
             Element name = (Element) person.getElementsByTagName("Date").item(0);
             String pName = name.getTextContent();
             if (pName.equals(conv.getDate())) {
