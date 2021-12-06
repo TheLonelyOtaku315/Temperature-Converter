@@ -80,7 +80,7 @@ public class ControllerHistory implements Initializable {
     public static ObservableList<Convertion> list = FXCollections.observableArrayList();
     public static ObservableList<Convertion> historyList = FXCollections.observableArrayList();
 
-    static int historyListSize = 0;
+    public static int historyListSize = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -100,6 +100,7 @@ public class ControllerHistory implements Initializable {
             addInfoTable(historyList, table, date, info, enter, given, delete);
             search(historyList, searchtext, table);
         }
+
     }
 
     public static void setHistoryListSize(int historyListSize) {
@@ -162,34 +163,30 @@ public class ControllerHistory implements Initializable {
                 new PropertyValueFactory<Convertion, String>("informationGiven"));
 
         delete.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        delete.setCellFactory(param -> new TableCell<Convertion, Convertion>() {
-            private final Button deleteButton = new Button("Delete");
+        delete.setCellFactory(param -> {
+            return new TableCell<Convertion, Convertion>() {
+                private final Button deleteButton = new Button("Delete");
 
-            @Override
-            protected void updateItem(Convertion conv, boolean empty) {
-                super.updateItem(conv, empty);
+                @Override
+                protected void updateItem(Convertion conv, boolean empty) {
+                    super.updateItem(conv, empty);
 
-                if (conv == null) {
-                    setGraphic(null);
-                    return;
-                }
-
-                setGraphic(deleteButton);
-                deleteButton.setOnAction(event -> {
-                    data.remove(conv);
-                    try {
-                        deleteBtnHandler(conv);
-                    } catch (ParserConfigurationException ex) {
-                        Logger.getLogger(ControllerHistory.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (SAXException ex) {
-                        Logger.getLogger(ControllerHistory.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IOException ex) {
-                        Logger.getLogger(ControllerHistory.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (TransformerException ex) {
-                        Logger.getLogger(ControllerHistory.class.getName()).log(Level.SEVERE, null, ex);
+                    if (conv == null) {
+                        setGraphic(null);
+                        return;
                     }
-                });
-            }
+
+                    setGraphic(deleteButton);
+                    deleteButton.setOnAction(event -> {
+                        data.remove(conv);
+                        try {
+                            deleteBtnHandler(conv);
+                        } catch (ParserConfigurationException | SAXException | IOException | TransformerException ex) {
+                            Logger.getLogger(ControllerHistory.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+                }
+            };
         });
 
         table.setItems(data);

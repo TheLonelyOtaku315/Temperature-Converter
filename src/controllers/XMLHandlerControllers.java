@@ -79,7 +79,7 @@ public class XMLHandlerControllers {
             // read history.xml before chnaging data
             String old1 = "";
             String old = readXMLAsString(old1);
-            System.out.print(old);
+//            System.out.print(old);
 
             // change history.xml data
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -92,7 +92,7 @@ public class XMLHandlerControllers {
             // read history.xml new data
             String update1 = "";
             String update = readXMLAsString(update1);
-            System.out.print(update);
+//            System.out.print(update);
 
             //Write the xml entirely
             String all = "<data>" + old + update + "</data>";
@@ -120,9 +120,6 @@ public class XMLHandlerControllers {
 
             doc.getDocumentElement().normalize();
 
-            System.err.println("Root Element :" + doc.getDocumentElement().getNodeName());
-            System.out.println("------");
-
             // get <Converstion>
             NodeList list = doc.getElementsByTagName("Converstion");
 
@@ -146,7 +143,6 @@ public class XMLHandlerControllers {
 //                    System.out.println("Information Enter : " + enter);
 //                    System.out.println("Information Given" + given);
 //                    System.out.println();
-
                     Convertion convertion = new Convertion(date, info, enter, given);
                     data.add(convertion);
 

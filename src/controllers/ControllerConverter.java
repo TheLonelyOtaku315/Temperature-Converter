@@ -48,7 +48,7 @@ public class ControllerConverter implements Initializable {
 
     private Stage stage;
     private Scene scene;
-    public static String decimalRestriction = "None";
+    public static String decimalRestriction;
     public static String illustrationRestriction = "Vertical Graph";
 
     @FXML
@@ -118,11 +118,8 @@ public class ControllerConverter implements Initializable {
         Parent root = loader.load();
         ControllerSetting set = loader.getController();
         String css = converter.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
-        set.setMode(css);
         root.getStylesheets().clear();
         root.getStylesheets().add(css);
-        
-        System.out.println(set.getMode());
 
         stage = (Stage) converter.getScene().getWindow();
         scene = new Scene(root);

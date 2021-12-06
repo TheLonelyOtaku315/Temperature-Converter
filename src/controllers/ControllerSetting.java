@@ -39,6 +39,7 @@ public class ControllerSetting implements Initializable {
     private Stage stage;
     private Scene scene;
     static String decimalSet;
+    static int historySet;
     static String illustrationSet = "Vetical Graph";
 
     @FXML
@@ -61,16 +62,10 @@ public class ControllerSetting implements Initializable {
     private Label decimalSave;
     @FXML
     private Label illustrationSave;
+    
+    public static ObservableList<Convertion> list = FXCollections.observableArrayList();
 
-    private String mode /*= "Light Mode"*/;
-
-    public String getMode() {
-        return mode;
-    }
-
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
+    private String mode = "Light Mode";
 
     private String history = Integer.toString(ControllerHistory.historyListSize);
 
@@ -78,12 +73,9 @@ public class ControllerSetting implements Initializable {
 
     private String illustration = ControllerConverter.illustrationRestriction;
 
-    public static ObservableList<Convertion> list = FXCollections.observableArrayList();
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(mode + "*****************************");
-        
+
         list = (XMLHandlerControllers.read());
 
         FadeTransition fader1 = new FadeTransition(Duration.seconds(0.1), historySave);
@@ -113,6 +105,32 @@ public class ControllerSetting implements Initializable {
 
         decimalSwitch.getItems().removeAll(decimalSwitch.getItems());
         decimalSwitch.getItems().addAll("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+        if (decimal != null) {
+            decimal = switch (decimal) {
+                case "#" ->
+                    "0";
+                case "#.0" ->
+                    "1";
+                case "#.00" ->
+                    "2";
+                case "#.000" ->
+                    "3";
+                case "#.0000" ->
+                    "4";
+                case "#.00000" ->
+                    "5";
+                case "#.000000" ->
+                    "6";
+                case "#.0000000" ->
+                    "7";
+                case "#.00000000" ->
+                    "8";
+                case "#.000000000" ->
+                    "9";
+                default ->
+                    "None";
+            };
+        }
         decimalSwitch.setValue(decimal);
 
         illustrationSwitch.getItems().removeAll(illustrationSwitch.getItems());
@@ -123,18 +141,19 @@ public class ControllerSetting implements Initializable {
         for (int i = 0; i < list.size(); i++) {
             historySwitch.getItems().addAll(Integer.toString(i + 1));
         }
-        historySwitch.getItems().add("all");
         historySwitch.setValue(history);
     }
 
     @FXML
-    private void previewChangeMode(ActionEvent event) {
+    private void previewChangeMode(ActionEvent event
+    ) {
         changeMode(exemple, "_1");
 
     }
 
     @FXML
-    private void AllChangeMode(ActionEvent event) {
+    private void AllChangeMode(ActionEvent event
+    ) {
         changeMode(exemple, "_1");
         changeMode(setting, "");
         FadeTransition fader1 = createFader1(modeSave);
@@ -255,7 +274,7 @@ public class ControllerSetting implements Initializable {
                     "Vertical Graph";
             };
 
-            FadeTransition fader1 = createFader1(historySwitch);
+            FadeTransition fader1 = createFader1(illustrationSave);
             FadeTransition fader2 = createFader2(illustrationSave);
 
             SequentialTransition blinkThenFade = new SequentialTransition(
