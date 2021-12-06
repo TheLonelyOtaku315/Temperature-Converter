@@ -39,7 +39,7 @@ public class ControllerSetting implements Initializable {
     private Stage stage;
     private Scene scene;
     static String decimalSet;
-    static String illustrationSet;
+    static String illustrationSet = "Vetical Graph";
 
     @FXML
     private BorderPane setting;
@@ -62,7 +62,15 @@ public class ControllerSetting implements Initializable {
     @FXML
     private Label illustrationSave;
 
-    private String mode = "Light Mode";
+    private String mode /*= "Light Mode"*/;
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 
     private String history = Integer.toString(ControllerHistory.historyListSize);
 
@@ -74,6 +82,8 @@ public class ControllerSetting implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println(mode + "*****************************");
+        
         list = (XMLHandlerControllers.read());
 
         FadeTransition fader1 = new FadeTransition(Duration.seconds(0.1), historySave);
@@ -107,7 +117,7 @@ public class ControllerSetting implements Initializable {
 
         illustrationSwitch.getItems().removeAll(illustrationSwitch.getItems());
         illustrationSwitch.getItems().addAll("Vertical Graph", "Horizontal Graph");
-        illustrationSwitch.setValue("illustration");
+        illustrationSwitch.setValue(illustration);
 
         historySwitch.getItems().removeAll(historySwitch.getItems());
         for (int i = 0; i < list.size(); i++) {
@@ -238,11 +248,11 @@ public class ControllerSetting implements Initializable {
         if (illustrationSwitch.getValue() != null) {
             illustrationSet = switch (illustrationSwitch.getValue()) {
                 case "Vertical Graph" ->
-                    "Vertical";
+                    "Vertical Graph";
                 case "Horizontal Graph" ->
-                    "Horizontal";
+                    "Horizontal Graph";
                 default ->
-                    "Vertical";
+                    "Vertical Graph";
             };
 
             FadeTransition fader1 = createFader1(historySwitch);

@@ -48,8 +48,8 @@ public class ControllerConverter implements Initializable {
 
     private Stage stage;
     private Scene scene;
-    public static String decimalRestriction;
-    public static String illustrationRestriction;
+    public static String decimalRestriction = "None";
+    public static String illustrationRestriction = "Vertical Graph";
 
     @FXML
     private ComboBox<String> comboBox;
@@ -91,7 +91,7 @@ public class ControllerConverter implements Initializable {
         K.setOnMouseClicked(event -> K.clear());
 
         illustrationRestriction = ControllerSetting.illustrationSet;
-        if ("Horizontal".equals(illustrationRestriction)) {
+        if ("Horizontal Graph".equals(illustrationRestriction)) {
             CategoryAxis Y = new CategoryAxis();
             NumberAxis X = new NumberAxis();
             BarChart< Number, String> temperatureChart;
@@ -114,11 +114,15 @@ public class ControllerConverter implements Initializable {
     public void switchToSetting(ActionEvent event) throws IOException {
         dataV.clear();
         dataH.clear();
-
-        Parent root = FXMLLoader.load(getClass().getResource("/view/SceneSetting.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SceneSetting.fxml"));
+        Parent root = loader.load();
+        ControllerSetting set = loader.getController();
         String css = converter.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
+        set.setMode(css);
         root.getStylesheets().clear();
         root.getStylesheets().add(css);
+        
+        System.out.println(set.getMode());
 
         stage = (Stage) converter.getScene().getWindow();
         scene = new Scene(root);
@@ -159,6 +163,7 @@ public class ControllerConverter implements Initializable {
     }
 
     private void switchBetweenConverter(TextField C, TextField F, TextField K, Label errorMessage, Label temperarureType) {
+        comboBox.setValue("");
         String info = "User Temperature";
         temperarureType.setText(info);
         if (isNumeric(C.getText()) || isNumeric(F.getText()) || isNumeric(K.getText())) {
