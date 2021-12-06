@@ -48,8 +48,8 @@ public class ControllerConverter implements Initializable {
 
     private Stage stage;
     private Scene scene;
-    private static String decimalRestriction;
-    private static String illustrationRestriction;
+    public static String decimalRestriction;
+    public static String illustrationRestriction;
 
     @FXML
     private ComboBox<String> comboBox;

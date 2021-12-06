@@ -80,7 +80,7 @@ public class ControllerHistory implements Initializable {
     public static ObservableList<Convertion> list = FXCollections.observableArrayList();
     public static ObservableList<Convertion> historyList = FXCollections.observableArrayList();
 
-    private static int historyListSize = 0;
+    static int historyListSize = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

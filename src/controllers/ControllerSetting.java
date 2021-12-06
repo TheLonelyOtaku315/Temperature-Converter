@@ -6,6 +6,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -51,9 +52,9 @@ public class ControllerSetting implements Initializable {
     @FXML
     private ComboBox<String> illustrationSwitch;
     @FXML
-    private ComboBox<String> languageSwitch;
+    private ComboBox<String> historySwitch;
     @FXML
-    private Label languageSave;
+    private Label historySave;
     @FXML
     private Label modeSave;
     @FXML
@@ -61,13 +62,21 @@ public class ControllerSetting implements Initializable {
     @FXML
     private Label illustrationSave;
 
+    private String mode = "Light Mode";
+
+    private String history = Integer.toString(ControllerHistory.historyListSize);
+
+    private String decimal = ControllerConverter.decimalRestriction;
+
+    private String illustration = ControllerConverter.illustrationRestriction;
+
     public static ObservableList<Convertion> list = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         list = (XMLHandlerControllers.read());
 
-        FadeTransition fader1 = new FadeTransition(Duration.seconds(0.1), languageSave);
+        FadeTransition fader1 = new FadeTransition(Duration.seconds(0.1), historySave);
         fader1.setToValue(0);
 
         FadeTransition fader2 = new FadeTransition(Duration.seconds(0.1), modeSave);
@@ -90,19 +99,22 @@ public class ControllerSetting implements Initializable {
 
         modeSwitch.getItems().removeAll(modeSwitch.getItems());
         modeSwitch.getItems().addAll("Light Mode", "Dark Mode");
+        modeSwitch.setValue(mode);
 
         decimalSwitch.getItems().removeAll(decimalSwitch.getItems());
         decimalSwitch.getItems().addAll("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+        decimalSwitch.setValue(decimal);
 
         illustrationSwitch.getItems().removeAll(illustrationSwitch.getItems());
         illustrationSwitch.getItems().addAll("Vertical Graph", "Horizontal Graph");
+        illustrationSwitch.setValue("illustration");
 
-        languageSwitch.getItems().removeAll(languageSwitch.getItems());
-        int size = list.size();
-
-        for (int i = 0; i < size; i++) {
-            languageSwitch.getItems().addAll(Integer.toString(i + 1));
+        historySwitch.getItems().removeAll(historySwitch.getItems());
+        for (int i = 0; i < list.size(); i++) {
+            historySwitch.getItems().addAll(Integer.toString(i + 1));
         }
+        historySwitch.getItems().add("all");
+        historySwitch.setValue(history);
     }
 
     @FXML
@@ -233,7 +245,7 @@ public class ControllerSetting implements Initializable {
                     "Vertical";
             };
 
-            FadeTransition fader1 = createFader1(languageSwitch);
+            FadeTransition fader1 = createFader1(historySwitch);
             FadeTransition fader2 = createFader2(illustrationSave);
 
             SequentialTransition blinkThenFade = new SequentialTransition(
@@ -248,10 +260,10 @@ public class ControllerSetting implements Initializable {
     @FXML
     public void getHistoryListSize() {
 
-        ControllerHistory.setHistoryListSize(Integer.valueOf(languageSwitch.getValue()));
+        ControllerHistory.setHistoryListSize(Integer.valueOf(historySwitch.getValue()));
 
-        FadeTransition fader1 = createFader1(languageSave);
-        FadeTransition fader2 = createFader2(languageSave);
+        FadeTransition fader1 = createFader1(historySave);
+        FadeTransition fader2 = createFader2(historySave);
 
         SequentialTransition blinkThenFade = new SequentialTransition(
                 fader1,

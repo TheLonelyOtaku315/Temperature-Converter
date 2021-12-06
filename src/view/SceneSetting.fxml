@@ -128,13 +128,13 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="languageSwitch" prefWidth="150.0" styleClass="secondary-color" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <ComboBox fx:id="historySwitch" prefWidth="150.0" styleClass="secondary-color" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <Button mnemonicParsing="false" onAction="#getHistoryListSize" styleClass="secondary-color" text="Save" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Label fx:id="languageSave" text="Saved" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label fx:id="historySave" text="Saved" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="14.0" />
                      </font></Label>
