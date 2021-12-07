@@ -88,8 +88,7 @@ public class ControllerHistory implements Initializable {
         list = XMLHandlerControllers.read();
         Collections.reverse(list);
         historyList.clear();
-        historyListSize = list.size();
-        System.out.println(historyListSize);
+//        System.out.println(historyListSize);
         if (historyListSize == 0) {
             addInfoTable(list, table, date, info, enter, given, delete);
             search(list, searchtext, table);

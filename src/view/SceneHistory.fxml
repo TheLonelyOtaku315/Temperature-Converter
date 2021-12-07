@@ -59,13 +59,13 @@
    <center>
       <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="table" prefHeight="570.0" prefWidth="685.0" styleClass="secondary-color">
+            <TableView fx:id="table" prefHeight="570.0" prefWidth="814.0" styleClass="secondary-color">
               <columns>
-                <TableColumn fx:id="date" prefWidth="123.0" sortType="DESCENDING" text="Date" />
-                  <TableColumn fx:id="info" prefWidth="131.0" sortType="DESCENDING" text="Information" />
-                  <TableColumn fx:id="enter" minWidth="0.0" prefWidth="140.0" sortType="DESCENDING" text="Information you enter:" />
-                  <TableColumn fx:id="given" minWidth="0.0" prefWidth="223.0" sortType="DESCENDING" text="Information Given to you: " />
-                  <TableColumn fx:id="delete" minWidth="0.0" prefWidth="66.0" sortType="DESCENDING" text="Delete" />
+                <TableColumn fx:id="date" prefWidth="139.0" sortType="DESCENDING" styleClass="secondary-color" text="Date" />
+                  <TableColumn fx:id="info" prefWidth="177.0" sortType="DESCENDING" styleClass="secondary-color" text="Information" />
+                  <TableColumn fx:id="enter" minWidth="0.0" prefWidth="139.0" sortType="DESCENDING" styleClass="secondary-color" text="Information you enter:" />
+                  <TableColumn fx:id="given" minWidth="0.0" prefWidth="186.0" sortType="DESCENDING" styleClass="secondary-color" text="Information Given to you: " />
+                  <TableColumn fx:id="delete" minWidth="0.0" prefWidth="109.0" sortType="DESCENDING" styleClass="secondary-color" text="Delete" />
               </columns>
                <HBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -84,7 +84,7 @@
                         <Insets left="15.0" right="15.0" top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="searchtext" prefWidth="150.0">
+                  <TextField fx:id="searchtext" prefWidth="150.0" styleClass="secondary-color">
                      <VBox.margin>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </VBox.margin>

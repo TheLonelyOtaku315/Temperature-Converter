@@ -68,7 +68,7 @@
             </ImageView>
             <HBox fx:id="btnBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#previousBtnHandler" prefHeight="50.0" prefWidth="125.0" text="Previous">
+                  <Button mnemonicParsing="false" onAction="#previousBtnHandler" prefHeight="50.0" prefWidth="125.0" styleClass="secondary-color" text="Previous">
                      <HBox.margin>
                         <Insets bottom="15.0" left="15.0" right="30.0" top="15.0" />
                      </HBox.margin>
@@ -76,7 +76,7 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#nextBtnHandler" prefHeight="50.0" prefWidth="125.0" text="Next">
+                  <Button mnemonicParsing="false" onAction="#nextBtnHandler" prefHeight="50.0" prefWidth="125.0" styleClass="secondary-color" text="Next">
                      <HBox.margin>
                         <Insets bottom="15.0" left="30.0" right="15.0" top="15.0" />
                      </HBox.margin>

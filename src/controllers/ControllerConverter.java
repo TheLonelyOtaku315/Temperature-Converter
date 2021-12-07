@@ -97,7 +97,7 @@ public class ControllerConverter implements Initializable {
             BarChart< Number, String> temperatureChart;
             temperatureChart = new BarChart<>(X, Y);
             temperatureChart.setData(dataH);
-            System.out.println("H work");
+//            System.out.println("H work");
             illustration.getChildren().add(temperatureChart);
         } else {
             CategoryAxis X = new CategoryAxis();
@@ -105,7 +105,7 @@ public class ControllerConverter implements Initializable {
             BarChart<String, Number> temperatureChart;
             temperatureChart = new BarChart<>(X, Y);
             temperatureChart.setData(dataV);
-            System.out.println("V work");
+//            System.out.println("V work");
             illustration.getChildren().add(temperatureChart);
         }
     }
@@ -499,7 +499,7 @@ public class ControllerConverter implements Initializable {
     private boolean isNumeric(String string) {
         double intValue;
 
-        System.out.println(String.format("Parsing string: \"%s\"", string));
+//        System.out.println(String.format("Parsing string: \"%s\"", string));
 
         if (string == null || string.equals("")) {
             return false;

@@ -136,7 +136,7 @@ public class ControllerHelp implements Initializable {
 
         String url = img.getImage().getUrl();
         String imgID = url.replaceAll("[^0-9]", "");
-        System.out.println(imgID);
+//        System.out.println(imgID);
         if (!"1".equals(imgID)) {
             FadeTransition fader1 = createFader2(img);
             fader1.play();

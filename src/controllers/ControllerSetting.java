@@ -222,7 +222,7 @@ public class ControllerSetting implements Initializable {
 
     @FXML
     public void getDecimalContraint() {
-        System.out.println(decimalSwitch.getValue());
+//        System.out.println(decimalSwitch.getValue());
 
         if (decimalSwitch.getValue() != null) {
             decimalSet = switch (decimalSwitch.getValue()) {
@@ -264,7 +264,7 @@ public class ControllerSetting implements Initializable {
 
     @FXML
     public void getGraphIllustration() {
-        System.out.println(illustrationSwitch.getValue());
+//        System.out.println(illustrationSwitch.getValue());
 
         if (illustrationSwitch.getValue() != null) {
             illustrationSet = switch (illustrationSwitch.getValue()) {
@@ -292,6 +292,7 @@ public class ControllerSetting implements Initializable {
     public void getHistoryListSize() {
 
         ControllerHistory.setHistoryListSize(Integer.valueOf(historySwitch.getValue()));
+        System.out.println(ControllerHistory.historyListSize);
 
         FadeTransition fader1 = createFader1(historySave);
         FadeTransition fader2 = createFader2(historySave);
