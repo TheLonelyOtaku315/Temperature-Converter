@@ -114,12 +114,27 @@ public class ControllerConverter implements Initializable {
     public void switchToSetting(ActionEvent event) throws IOException {
         dataV.clear();
         dataH.clear();
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SceneSetting.fxml"));
         Parent root = loader.load();
-        ControllerSetting set = loader.getController();
+
+        ControllerSetting set = (ControllerSetting) loader.getController();
         String css = converter.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
+
         root.getStylesheets().clear();
         root.getStylesheets().add(css);
+
+        set.exemple.getStylesheets().clear();
+        set.exemple.getStylesheets().add(css);
+
+        if (css.toLowerCase().contains("light")) {
+            css = "Light Mode";
+        } else if (css.toLowerCase().contains("dark")) {
+            css = "Dark Mode";
+        } else {
+            css = "";
+        }
+        set.modeSwitch.setValue(css);
 
         stage = (Stage) converter.getScene().getWindow();
         scene = new Scene(root);

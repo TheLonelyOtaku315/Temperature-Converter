@@ -84,21 +84,26 @@ public class ControllerHistory implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         list = XMLHandlerControllers.read();
         Collections.reverse(list);
         historyList.clear();
+        historyListSize = list.size();
+        System.out.println(historyListSize);
         if (historyListSize == 0) {
             addInfoTable(list, table, date, info, enter, given, delete);
             search(list, searchtext, table);
         } else {
             for (int i = 0; i < historyListSize; i++) {
-                System.out.println(list.size() - i);
+//                System.out.println(list.size() - i);
                 historyList.add(list.get(i));
-                System.out.println(list.get(i));
+//                System.out.println(list.get(i));
 
             }
             addInfoTable(historyList, table, date, info, enter, given, delete);
             search(historyList, searchtext, table);
+            historyListSize = historyList.size();
+
         }
 
     }
@@ -110,11 +115,26 @@ public class ControllerHistory implements Initializable {
     @FXML
     public void switchToSetting(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/SceneSetting.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SceneSetting.fxml"));
+        Parent root = loader.load();
 
+        ControllerSetting set = (ControllerSetting) loader.getController();
         String css = history.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
+
         root.getStylesheets().clear();
         root.getStylesheets().add(css);
+
+        set.exemple.getStylesheets().clear();
+        set.exemple.getStylesheets().add(css);
+
+        if (css.toLowerCase().contains("light")) {
+            css = "Light Mode";
+        } else if (css.toLowerCase().contains("dark")) {
+            css = "Dark Mode";
+        } else {
+            css = "";
+        }
+        set.modeSwitch.setValue(css);
 
         stage = (Stage) history.getScene().getWindow();
         scene = new Scene(root);

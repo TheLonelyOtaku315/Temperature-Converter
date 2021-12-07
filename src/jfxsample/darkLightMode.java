@@ -5,8 +5,6 @@
  */
 package jfxsample;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -15,16 +13,14 @@ import javafx.scene.layout.BorderPane;
  */
 public class darkLightMode {
 
-    public void setDarkMode(BorderPane parent, String number) {
+    public void setDarkMode(BorderPane parent) {
         parent.getStylesheets().clear();
-        parent.getStylesheets().add("styles/light" + number + ".css");
-        Image image = new Image("img/moon.png");
+        parent.getStylesheets().add("styles/light.css");
     }
 
-    public void setLightMode(BorderPane parent, String number) {
+    public void setLightMode(BorderPane parent) {
         parent.getStylesheets().clear();
-        parent.getStylesheets().add("styles/dark" + number + ".css");
-        Image image = new Image("img/sun.png");
+        parent.getStylesheets().add("styles/dark.css");
     }
 
 }

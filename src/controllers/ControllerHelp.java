@@ -48,11 +48,27 @@ public class ControllerHelp implements Initializable {
     @FXML
     public void switchToSetting() throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/SceneSetting.fxml"));
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SceneSetting.fxml"));
+        Parent root = loader.load();
 
+        ControllerSetting set = (ControllerSetting) loader.getController();
         String css = help.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
+
         root.getStylesheets().clear();
         root.getStylesheets().add(css);
+
+        set.exemple.getStylesheets().clear();
+        set.exemple.getStylesheets().add(css);
+
+        if (css.toLowerCase().contains("light")) {
+            css = "Light Mode";
+        } else if (css.toLowerCase().contains("dark")) {
+            css = "Dark Mode";
+        } else {
+            css = "";
+        }
+        set.modeSwitch.setValue(css);
 
         stage = (Stage) help.getScene().getWindow();
         scene = new Scene(root);

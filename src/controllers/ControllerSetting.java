@@ -39,6 +39,7 @@ public class ControllerSetting implements Initializable {
     private Stage stage;
     private Scene scene;
     static String decimalSet;
+    static String modeSet;
     static int historySet;
     static String illustrationSet = "Vetical Graph";
 
@@ -47,7 +48,7 @@ public class ControllerSetting implements Initializable {
     @FXML
     public BorderPane exemple;
     @FXML
-    private ComboBox<String> modeSwitch;
+    ComboBox<String> modeSwitch;
     @FXML
     private ComboBox<String> decimalSwitch;
     @FXML
@@ -62,10 +63,8 @@ public class ControllerSetting implements Initializable {
     private Label decimalSave;
     @FXML
     private Label illustrationSave;
-    
-    public static ObservableList<Convertion> list = FXCollections.observableArrayList();
 
-    private String mode = "Light Mode";
+    public static ObservableList<Convertion> list = FXCollections.observableArrayList();
 
     private String history = Integer.toString(ControllerHistory.historyListSize);
 
@@ -76,7 +75,7 @@ public class ControllerSetting implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        list = (XMLHandlerControllers.read());
+        list = XMLHandlerControllers.read();
 
         FadeTransition fader1 = new FadeTransition(Duration.seconds(0.1), historySave);
         fader1.setToValue(0);
@@ -101,7 +100,6 @@ public class ControllerSetting implements Initializable {
 
         modeSwitch.getItems().removeAll(modeSwitch.getItems());
         modeSwitch.getItems().addAll("Light Mode", "Dark Mode");
-        modeSwitch.setValue(mode);
 
         decimalSwitch.getItems().removeAll(decimalSwitch.getItems());
         decimalSwitch.getItems().addAll("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
@@ -137,6 +135,10 @@ public class ControllerSetting implements Initializable {
         illustrationSwitch.getItems().addAll("Vertical Graph", "Horizontal Graph");
         illustrationSwitch.setValue(illustration);
 
+        if ("0".equals(history)) {
+            history = Integer.toString(list.size());
+        }
+
         historySwitch.getItems().removeAll(historySwitch.getItems());
         for (int i = 0; i < list.size(); i++) {
             historySwitch.getItems().addAll(Integer.toString(i + 1));
@@ -147,15 +149,15 @@ public class ControllerSetting implements Initializable {
     @FXML
     private void previewChangeMode(ActionEvent event
     ) {
-        changeMode(exemple, "_1");
+        changeMode(exemple);
 
     }
 
     @FXML
     private void AllChangeMode(ActionEvent event
     ) {
-        changeMode(exemple, "_1");
-        changeMode(setting, "");
+        changeMode(exemple);
+        changeMode(setting);
         FadeTransition fader1 = createFader1(modeSave);
         FadeTransition fader2 = createFader2(modeSave);
 
@@ -168,12 +170,12 @@ public class ControllerSetting implements Initializable {
 
     }
 
-    private void changeMode(BorderPane parent, String number) {
+    private void changeMode(BorderPane parent) {
         darkLightMode dlm = new darkLightMode();
         if (!modeSwitch.getValue().equals("Light Mode")) {
-            dlm.setLightMode(parent, number);
+            dlm.setLightMode(parent);
         } else if (!modeSwitch.getValue().equals("Dark Mode")) {
-            dlm.setDarkMode(parent, number);
+            dlm.setDarkMode(parent);
         }
     }
 
