@@ -31,12 +31,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import static jfxsample.converter.CelsiusToFahrenheit;
-import static jfxsample.converter.CelsiusToKelvin;
-import static jfxsample.converter.FahrenheitToCelsius;
-import static jfxsample.converter.FahrenheitToKelvin;
-import static jfxsample.converter.KelvinToCelsius;
-import static jfxsample.converter.KelvinToFahrenheit;
+import static controllers.converter.CelsiusToFahrenheit;
+import static controllers.converter.CelsiusToKelvin;
+import static controllers.converter.FahrenheitToCelsius;
+import static controllers.converter.FahrenheitToKelvin;
+import static controllers.converter.KelvinToCelsius;
+import static controllers.converter.KelvinToFahrenheit;
 import model.Convertion;
 
 /**
