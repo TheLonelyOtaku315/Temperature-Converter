@@ -261,14 +261,20 @@ public class ControllerConverter implements Initializable {
                 oldK = K.getText();
                 convertion = new Convertion(temperarureType.getText(), " °F: " + F.getText(), " °C: " + C.getText() + "\n  K: " + K.getText());
 
+            } else {
+                C.setText(oldC);
+                F.setText(oldF);
+                K.setText(oldK);
+//                errorMessage(temperarureType, C, F, K, errorMessage, "Error");
+                convertion = new Convertion(temperarureType.getText(), "", " °C: " + C.getText() + "\n °F: " + F.getText() + "\n  K: " + K.getText());
             }
         } else {
-            errorMessage(temperarureType, C, F, K, errorMessage, "Can't convert Text Temperature");
+            errorMessage(temperarureType, C, F, K, errorMessage, "Error");
             convertion = new Convertion(temperarureType.getText(), "Error ", "Error", "Error");
         }
-        try  {
+        try {
             if (0 > Double.valueOf(K.getText())) {
-                errorMessage(temperarureType, C, F, K, errorMessage, "Thre Temperature can't be smaller then 0 K");
+                errorMessage(temperarureType, C, F, K, errorMessage, "Error");
                 convertion = new Convertion(temperarureType.getText(), "Error ", "Error", "Error");
             }
         } catch (NumberFormatException e) {
