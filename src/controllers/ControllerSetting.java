@@ -291,7 +291,7 @@ public class ControllerSetting implements Initializable {
     public void getHistoryListSize() {
 
         ControllerHistory.setHistoryListSize(Integer.valueOf(historySwitch.getValue()));
-        System.out.println(ControllerHistory.historyListSize);
+//        System.out.println(ControllerHistory.historyListSize);
 
         FadeTransition fader1 = createFader1(historySave);
         FadeTransition fader2 = createFader2(historySave);

@@ -162,10 +162,10 @@ public class XMLHandlerControllers {
             bw.write(all);
 
         } catch (IOException e) {
-            System.err.format("IOException: %s%n", e);
+//            System.err.format("IOException: %s%n", e);
         }
 
-        System.out.println("XML File Changed");
+//        System.out.println("XML File Changed");
 
     }
 

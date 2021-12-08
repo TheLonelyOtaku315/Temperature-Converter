@@ -25,10 +25,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -75,7 +77,7 @@ public class ControllerHistory implements Initializable {
     @FXML
     private TableColumn<Convertion, Convertion> delete;
 
-    private static File xmlFile = new File("history.xml");
+    private static final File xmlFile = new File("history.xml");
 
     public static ObservableList<Convertion> list = FXCollections.observableArrayList();
     public static ObservableList<Convertion> historyList = FXCollections.observableArrayList();
@@ -245,22 +247,18 @@ public class ControllerHistory implements Initializable {
             bw.write("");
 
         } catch (IOException e) {
-            System.err.format("IOException: %s%n", e);
+//            System.err.format("IOException: %s%n", e);
         }
 
-        System.out.println("XML File Changed");
-
+//        System.out.println("XML File Changed");
     }
 
     private static void search(ObservableList list, TextField searchtext, TableView table) {
-        String text = searchtext.getText();
-        ObservableList temp;
 
         FilteredList<Convertion> filteredData = new FilteredList<>(list, b -> true);
 
-        searchtext.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(employee -> {
-
+        searchtext.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            filteredData.setPredicate((Convertion employee) -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
@@ -273,10 +271,8 @@ public class ControllerHistory implements Initializable {
                     return true;
                 } else if (employee.getInformationGiven().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (employee.getInformationEnter().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
                 } else {
-                    return false;
+                    return employee.getInformationEnter().toLowerCase().contains(lowerCaseFilter);
                 }
             });
         });
