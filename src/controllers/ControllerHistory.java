@@ -36,6 +36,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -179,9 +180,11 @@ public class ControllerHistory implements Initializable {
 
         enter.setCellValueFactory(
                 new PropertyValueFactory<Convertion, String>("informationEnter"));
+        enter.setCellFactory(TooltippedTableCell.forTableColumn());
 
         given.setCellValueFactory(
                 new PropertyValueFactory<Convertion, String>("informationGiven"));
+        given.setCellFactory(TooltippedTableCell.forTableColumn());
 
         delete.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         delete.setCellFactory(param -> {

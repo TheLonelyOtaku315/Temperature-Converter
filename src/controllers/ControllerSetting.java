@@ -184,6 +184,7 @@ public class ControllerSetting implements Initializable {
 
         String css = setting.getStylesheets().toString().replaceAll("[^a-zA-Z0-9/:.]", "");
         root.getStylesheets().clear();
+        root.getStylesheets().remove(css);
         root.getStylesheets().add(css);
 
         stage = (Stage) setting.getScene().getWindow();
