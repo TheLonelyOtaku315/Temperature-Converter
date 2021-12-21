@@ -181,7 +181,8 @@ public class ControllerHistory implements Initializable {
         enter.setCellValueFactory(
                 new PropertyValueFactory<Convertion, String>("informationEnter"));
         enter.setCellFactory(TooltippedTableCell.forTableColumn());
-
+        enter.setCellFactory(TooltippedTableCell.forTableColumn());
+        
         given.setCellValueFactory(
                 new PropertyValueFactory<Convertion, String>("informationGiven"));
         given.setCellFactory(TooltippedTableCell.forTableColumn());

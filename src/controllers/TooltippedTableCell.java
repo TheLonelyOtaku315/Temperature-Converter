@@ -18,6 +18,8 @@ import javafx.util.converter.DefaultStringConverter;
 /**
  *
  * @author Tonny
+ * @param <S>
+ * @param <T>
  */
 public class TooltippedTableCell<S, T> extends TableCell<S, T> {
 
@@ -52,19 +54,15 @@ public class TooltippedTableCell<S, T> extends TableCell<S, T> {
         }
     }
 
-    private ObjectProperty<StringConverter<T>> converter = new SimpleObjectProperty<>(this, "converter");
+    private ObjectProperty<StringConverter<T>> converter;
 
-    /**
-     * The easiest way to get this working is to call this class's static
-     * forTableColumn() method:      <code>
-     * someColumn.setCellFactory(TooltippedTableCell.forTableColumn());
-     * </code>
-     */
     public TooltippedTableCell() {
         this(null);
+        this.converter = new SimpleObjectProperty<>(this, "converter");
     }
 
     public TooltippedTableCell(StringConverter<T> converter) {
+        this.converter = new SimpleObjectProperty<>(this, "converter");
         this.getStyleClass().add("tooltipped-table-cell");
         setConverter(converter);
     }
