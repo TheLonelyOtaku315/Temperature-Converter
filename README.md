@@ -10,16 +10,24 @@ There is also a menu bar that let you switch between scene.
 In the Coverter, there is a converter that let you convert temperature between Celsius, Fahrenheit and Kelvin.
 There is also key temperature like:
   -Abosult Zero
+  
   -Boiling Point of Water
+  
   -Frezing Point of Water
+  
   -Room Temperature
+  
   -Body Temperature
+
 This information will we show in the graph Vertical Chart or a Horizontal Chart.
 
 In the Setting, there will be 4 setting:
   1. The numbers of items in teh History: What that setting do is to set the number of thing you want to see in the history table 
+  
   2.Dark mode / Light mode: Change the css file of every Scene.
+  
   3.Number of Decimal: Set the nu,ber of decimal during the convertion.
+  
   4.Vertical Graph / Horizontal Graph: Let you switch between a Vertical and a Horizontal Chart
         
 In the History, there is a Table that have all the convertion did with the application, it give you different information like:
